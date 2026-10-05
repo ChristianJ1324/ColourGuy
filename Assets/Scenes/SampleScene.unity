@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 372204823}
   - component: {fileID: 372204827}
   - component: {fileID: 372204828}
+  - component: {fileID: 372204829}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -165,8 +166,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!58 &372204824
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -289,10 +290,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed7dee69647c5c46bfc9c6e649ab9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  playerRigidBody: {fileID: 372204823}
   speed: 1
   jumpForce: 10
   isOnGround: 0
+  groundCheckDistance: 0.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &372204828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +406,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &372204829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372204822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133589b0547b31d4daed3e4ff9152fd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerColourSwitching
+  m_moveDirection: {x: 0, y: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
