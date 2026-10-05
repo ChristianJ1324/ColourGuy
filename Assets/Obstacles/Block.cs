@@ -35,9 +35,9 @@ public class Block : MonoBehaviour
         // all blue blocks may become red
     }
 
-    void ChangeColour(Colour NewColour)
+    public void ChangeColour(Colour _newColour)
     {
-        GetComponent<SpriteRenderer>().color = m_startingColour switch
+        GetComponent<SpriteRenderer>().color = _newColour switch
         {
             Colour.Red => Color.red,
             Colour.Green => Color.green,
@@ -45,7 +45,7 @@ public class Block : MonoBehaviour
             Colour.Yellow => Color.yellow,
         };
         // Adjust Collision Mask to match Colour
-        GetComponent<Rigidbody2D>().includeLayers = m_startingColour switch
+        GetComponent<Rigidbody2D>().includeLayers = _newColour switch
         {
             Colour.Red => LayerMask.GetMask("Red"),
             Colour.Green => LayerMask.GetMask("Green"),
