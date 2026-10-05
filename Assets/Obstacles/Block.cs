@@ -29,13 +29,22 @@ public class Block : MonoBehaviour
     {
         // Automatically change Colour of Block when Enum is updated in editor
         Debug.Log($"Colour changed to {StartingColour}");
+        ChangeColour(StartingColour);
+
+        // When a Block is added to a module, the colours are randomized and remapped
+        // all blue blocks may become red
+    }
+
+    void ChangeColour(Colour NewColour)
+    {
         GetComponent<SpriteRenderer>().color = StartingColour switch
         {
-            Colour.Red    => Color.red,
-            Colour.Green  => Color.green,
-            Colour.Blue   => Color.blue,
+            Colour.Red => Color.red,
+            Colour.Green => Color.green,
+            Colour.Blue => Color.blue,
             Colour.Yellow => Color.yellow,
         };
+        // Adjust Collision Mask to match Colour
         GetComponent<Rigidbody2D>().includeLayers = StartingColour switch
         {
             Colour.Red => LayerMask.GetMask("Red"),
@@ -44,7 +53,5 @@ public class Block : MonoBehaviour
             Colour.Yellow => LayerMask.GetMask("Yellow"),
 
         };
-
-
     }
 }
