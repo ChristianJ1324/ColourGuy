@@ -5,7 +5,7 @@ public class Module : MonoBehaviour
 {
     public bool m_RandomColour = true;
 
-    public float m_Movespeed = 0.1f;
+    float m_Movespeed = 0.1f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
