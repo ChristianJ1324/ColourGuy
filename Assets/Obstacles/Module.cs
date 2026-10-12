@@ -5,7 +5,7 @@ public class Module : MonoBehaviour
 {
     public bool m_RandomColour = true;
 
-    float m_Movespeed = 0.1f;
+    public float m_Movespeed = 0.1f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,10 +17,19 @@ public class Module : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Gradually move Right
+        // Store Position
         Vector3 position = transform.position;
+
+        // Move Module to the Left
         position.x += -m_Movespeed * Time.deltaTime;
         transform.position = position;
+
+        // Destroy Module if too far off Screen
+        if (position.x < 0)// TODO ADD MODULE SIZE and REPLACE WITH ACTUAL EDGE OF SCREEN
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     void OnValidate()
