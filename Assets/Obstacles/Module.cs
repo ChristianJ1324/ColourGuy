@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +12,8 @@ public class Module : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        // Randomize Colours 
+        RemapColours();
     }
 
     // Update is called once per frame
@@ -38,9 +40,35 @@ public class Module : MonoBehaviour
         {
             if (child.TryGetComponent<Block>(out var block))
             {
-                block.m_startingColour = m_RandomColour ? Colour.Blue : Colour.Red;
                 block.ChangeColour(block.m_startingColour);
             }
+        }
+    }
+
+    void RemapColours()
+    {
+        // Pull Colours Enum
+        var colours = (Colour[])System.Enum.GetValues(typeof(Colour));
+
+        // Create a shuffled list
+        var shuffled = (Colour[])colours.Clone();
+        for (int i = shuffled.Length - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
+        }
+
+        // Create Map of Colour -> Shuffled
+        var map = new Dictionary<Colour, Colour>();
+        for (int i = 0; i < colours.Length; i++)
+        {
+            map[colours[i]] = shuffled[i];
+        }
+
+        // Apply new colour map to blocks
+        foreach (var block in GetComponentsInChildren<Block>())
+        {
+            block.ChangeColour(map[block.m_startingColour]);
         }
     }
 }

@@ -837,10 +837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   m_ModulePrefabs:
   - {fileID: 8445046209077851235, guid: b0379949c6c137e4da35ad0730f7a32b, type: 3}
-  - {fileID: 7745619170253124149, guid: eed20b01355720d4896a86f52c447e87, type: 3}
-  m_ModuleMoveSpeed: 0.1
-  m_NumModules: 3
-  m_ModuleWidth: 250
+  m_ModuleMoveSpeed: 1
+  m_NumModules: 5
+  m_ModuleWidth: 2
 --- !u!4 &1121113495
 Transform:
   m_ObjectHideFlags: 0
