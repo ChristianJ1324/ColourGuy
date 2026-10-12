@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public enum PlayerColor
 {
+    White,
     Red,
     Blue,
     Yellow,
@@ -36,7 +37,11 @@ public class PlayerColourSwitching : MonoBehaviour
         m_moveDirection = m_playerInput.actions["Move"].ReadValue<Vector2>();
         Debug.Log(m_moveDirection);
 
-        if (m_moveDirection.x < 0 && m_moveDirection.y >= 0) // top left
+        if (m_moveDirection.x == 0 && m_moveDirection.y == 0)
+        {
+            SetColorState(PlayerColor.White); // default
+        }
+        else if (m_moveDirection.x < 0 && m_moveDirection.y >= 0) // top left
         {
             SetColorState(PlayerColor.Red);
         }
@@ -76,6 +81,10 @@ public class PlayerColourSwitching : MonoBehaviour
             case PlayerColor.Green:
                 gameObject.layer = LayerMask.NameToLayer("Green");
                 m_spriteRenderer.color = Color.green;
+                break;
+            default:
+                gameObject.layer = LayerMask.NameToLayer("Default");
+                m_spriteRenderer.color = Color.white;
                 break;
 
         }
