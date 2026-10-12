@@ -411,13 +411,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed7dee69647c5c46bfc9c6e649ab9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 0.5
-  jumpForce: 10
-  isOnGround: 0
-  groundCheckDistance: 0.1
-  groundLayer:
+  m_moveSpeed: 0
+  m_jumpForce: 0
+  m_isOnGround: 0
+  m_groundCheckDistance: 0
+  m_groundLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
 --- !u!114 &372204828
 MonoBehaviour:
   m_ObjectHideFlags: 0
