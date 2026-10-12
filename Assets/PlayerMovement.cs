@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D playerCollider;
     private Vector3 bottom;
 
+    private Vector2 startPos;
 
     public float speed;
     public float jumpForce;
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+
+        startPos = playerRigidBody.position;
     }
 
     // Update is called once per frame
@@ -29,7 +32,17 @@ public class PlayerMovement : MonoBehaviour
     {
         bottom = new Vector3(transform.position.x, (float)(playerCollider.bounds.min.y - 0.01), transform.position.z);
         CheckForGround();
+
+
+        if (startPos.x > bottom.x)
+        {
+            // Gradually move Right
+            Vector3 position = transform.position;
+            position.x += speed * Time.deltaTime;
+            transform.position = position;
+        }
     }
+        
 
     public void OnJump()//InputAction.CallbackContext context)
     {
