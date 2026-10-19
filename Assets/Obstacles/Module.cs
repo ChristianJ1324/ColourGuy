@@ -27,7 +27,7 @@ public class Module : MonoBehaviour
         transform.position = position;
 
         // Destroy Module if too far off Screen
-        if (position.x < 0)// TODO ADD MODULE SIZE and REPLACE WITH ACTUAL EDGE OF SCREEN
+        if (position.x < -12)// TODO ADD MODULE SIZE and REPLACE WITH ACTUAL EDGE OF SCREEN
         {
             Destroy(gameObject);
         }
