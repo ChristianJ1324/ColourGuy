@@ -1,15 +1,5 @@
 using UnityEngine;
 
-public enum Colour
-{ 
-    Red,
-    Green,
-    Blue,
-    Yellow,
-}
-
-
-
 public class Block : MonoBehaviour
 {
     public Colour m_startingColour;

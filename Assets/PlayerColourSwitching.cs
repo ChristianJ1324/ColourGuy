@@ -2,15 +2,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-public enum PlayerColor
+public enum Colour
 {
     White,
     Red,
+    Green,
     Blue,
     Yellow,
-    Green,
 }
+
 
 public class PlayerColourSwitching : MonoBehaviour
 {
@@ -18,6 +18,8 @@ public class PlayerColourSwitching : MonoBehaviour
     private SpriteRenderer m_spriteRenderer;
     private PlayerInput m_playerInput;
     public Vector2 m_moveDirection;
+
+    public Colour m_currentColour; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -39,46 +41,46 @@ public class PlayerColourSwitching : MonoBehaviour
 
         if (m_moveDirection.x == 0 && m_moveDirection.y == 0)
         {
-            SetColorState(PlayerColor.White); // default
+            SetColorState(Colour.White); // default
         }
         else if (m_moveDirection.x < 0 && m_moveDirection.y >= 0) // top left
         {
-            SetColorState(PlayerColor.Red);
+            SetColorState(Colour.Red);
         }
         else if (m_moveDirection.x >= 0 && m_moveDirection.y >= 0) // top right
         {
-            SetColorState(PlayerColor.Blue);
+            SetColorState(Colour.Blue);
         }
         else if (m_moveDirection.x < 0 && m_moveDirection.y < 0) // bottom left
         {
-            SetColorState(PlayerColor.Yellow);
+            SetColorState(Colour.Yellow);
         }
         else // bottom right
         {
-            SetColorState(PlayerColor.Green);
+            SetColorState(Colour.Green);
         }
 
 
     }
 
 
-    public void SetColorState(PlayerColor _colorState)
+    public void SetColorState(Colour _colorState)
     {
         switch (_colorState)
         {
-            case PlayerColor.Red:
+            case Colour.Red:
                 gameObject.layer = LayerMask.NameToLayer("Red");
                 m_spriteRenderer.color = Color.red;
                 break;
-            case PlayerColor.Blue:
+            case Colour.Blue:
                 gameObject.layer = LayerMask.NameToLayer("Blue");
                 m_spriteRenderer.color = Color.blue;
                 break;
-            case PlayerColor.Yellow:
+            case Colour.Yellow:
                 gameObject.layer = LayerMask.NameToLayer("Yellow");
                 m_spriteRenderer.color = Color.yellow;
                 break;
-            case PlayerColor.Green:
+            case Colour.Green:
                 gameObject.layer = LayerMask.NameToLayer("Green");
                 m_spriteRenderer.color = Color.green;
                 break;
