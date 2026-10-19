@@ -35,7 +35,7 @@ public class PlayerColourSwitching : MonoBehaviour
     public void OnMove()
     {
         m_moveDirection = m_playerInput.actions["Move"].ReadValue<Vector2>();
-        Debug.Log(m_moveDirection);
+        //Debug.Log(m_moveDirection);
 
         if (m_moveDirection.x == 0 && m_moveDirection.y == 0)
         {
