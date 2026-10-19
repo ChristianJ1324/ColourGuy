@@ -40,6 +40,8 @@ public class ModuleSpawner : MonoBehaviour
         // Select a random module from the list
         Module prefab = m_ModulePrefabs[Random.Range(0, m_ModulePrefabs.Count)];
 
+        prefab.m_Movespeed = m_ModuleMoveSpeed;
+
         float x = transform.position.x;
 
         if (transform.childCount > 0)
