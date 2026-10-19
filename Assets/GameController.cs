@@ -19,11 +19,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        // init ads
-        MobileAds.Initialize(m_initStatus =>
-        {
-            print("Google ads are initialised");
-        });
+        
     }
 
     public void StartGame()
