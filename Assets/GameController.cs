@@ -12,9 +12,8 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 1f;
-        m_playerInput.enabled = false;
-        m_playerBody.simulated = false;
-
+        m_playerInput.enabled = true;
+        m_playerBody.simulated = true;
     }
 
     void Start()
