@@ -58,7 +58,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 256
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 1535242294873041559, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Name
@@ -66,6 +66,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Color.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
