@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class Module : MonoBehaviour
@@ -48,11 +50,13 @@ public class Module : MonoBehaviour
     void RemapColours()
     {
         // Pull Colours Enum
-        var colours = (Colour[])System.Enum.GetValues(typeof(Colour));
+        var colours = ((Colour[])System.Enum.GetValues(typeof(Colour)))
+              .Where(c => c != Colour.White)
+              .ToList();
 
         // Create a shuffled list
-        var shuffled = (Colour[])colours.Clone();
-        for (int i = shuffled.Length - 1; i > 0; i--)
+        var shuffled = new List<Colour>(colours);
+        for (int i = shuffled.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
             (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
@@ -60,7 +64,7 @@ public class Module : MonoBehaviour
 
         // Create Map of Colour -> Shuffled
         var map = new Dictionary<Colour, Colour>();
-        for (int i = 0; i < colours.Length; i++)
+        for (int i = 0; i < colours.Count; i++)
         {
             map[colours[i]] = shuffled[i];
         }
@@ -68,7 +72,8 @@ public class Module : MonoBehaviour
         // Apply new colour map to blocks
         foreach (var block in GetComponentsInChildren<Block>())
         {
-            block.ChangeColour(map[block.m_startingColour]);
+            // Change colour of non-white blocks
+            if (map.TryGetValue(block.m_startingColour, out var newColour)) block.ChangeColour(newColour);
         }
     }
 }
