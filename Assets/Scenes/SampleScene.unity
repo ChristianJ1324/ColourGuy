@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f503ad08631fa704b8067ccebd5b72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AdRewarded
+  m_demoCoinsPerReward: 100
 --- !u!114 &67941314
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class AdRewarded : MonoBehaviour
 {
+    // set how many demo coins a completed ad earns
+    [SerializeField, Min(1)] private int m_demoCoinsPerReward = 100;
+
     private RewardedAd m_rewardedAd;
     private string m_adUnitID = "ca-app-pub-3940256099942544/5224354917";
 
@@ -72,7 +75,8 @@ public class AdRewarded : MonoBehaviour
             Debug.Log("Showing Ad");
             m_rewardedAd.Show((Reward _reward) =>
             {
-                // reard the user
+                // add coins only after the ad gives its reward
+                InAppPurchaseController.AddDemoCoins(m_demoCoinsPerReward);
                 print($"Ad reward user: type: {_reward.Type}, amount: {_reward.Amount}");
             });
             return true;

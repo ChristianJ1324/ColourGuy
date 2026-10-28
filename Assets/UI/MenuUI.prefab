@@ -1803,6 +1803,7 @@ GameObject:
   - component: {fileID: 4546809146649149419}
   - component: {fileID: 289849253904444027}
   - component: {fileID: 3071116990508500414}
+  - component: {fileID: 8844731556902713047}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -1829,6 +1830,7 @@ RectTransform:
   - {fileID: 5300000051}
   - {fileID: 5300000101}
   - {fileID: 5300000111}
+  - {fileID: 8154410262753174002}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1919,6 +1921,21 @@ MonoBehaviour:
   m_pauseButton: {fileID: 5300000100}
   m_muteButton: {fileID: 5300000110}
   m_muteButtonLabel: {fileID: 5300000115}
+--- !u!114 &8844731556902713047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951154378447231053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a17a5f56084b9d8a1ef3e647e5d35f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InAppPurchaseController
+  m_fakeCoinsPerPurchase: 100
+  m_buyCoinsButton: {fileID: 5300000034}
+  m_coinBalanceLabel: {fileID: 5300000039}
 --- !u!1 &6988491853388710642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2590,7 +2607,6 @@ RectTransform:
   m_Children:
   - {fileID: 5300000021}
   - {fileID: 5300000031}
-  - {fileID: 5300000037}
   - {fileID: 5300000041}
   m_Father: {fileID: 3648407848640360235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2672,7 +2688,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -65}
+  m_AnchoredPosition: {x: 0, y: 275}
   m_SizeDelta: {x: 660, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5300000022
@@ -2838,7 +2854,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5300000033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8844731556902713047}
+        m_TargetAssemblyTypeName: InAppPurchaseController, Assembly-CSharp
+        m_MethodName: BuyCoinPack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
 
 --- !u!114 &5300000035
 MonoBehaviour:
@@ -2873,7 +2901,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Buy Coins
+  m_Text: Add 100 Demo Coins
 
 --- !u!1 &5300000036
 GameObject:
@@ -2887,7 +2915,7 @@ GameObject:
   - component: {fileID: 5300000038}
   - component: {fileID: 5300000039}
   m_Layer: 5
-  m_Name: PurchasePlaceholderText
+  m_Name: CoinBalanceLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2905,12 +2933,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5300000011}
+  m_Father: {fileID: 8154410262753174002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 660, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -24, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5300000038
 CanvasRenderer:
@@ -2947,13 +2975,90 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 22
     m_MaxSize: 32
-    m_Alignment: 4
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Purchase flow to be added.
+  m_Text: Demo Coins: 0
+
+--- !u!1 &8154410262753174001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8154410262753174002}
+  - component: {fileID: 8154410262753174003}
+  - component: {fileID: 8154410262753174004}
+  m_Layer: 5
+  m_Name: CoinBalanceTab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8154410262753174002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154410262753174001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5300000037}
+  m_Father: {fileID: 3648407848640360235}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -32, y: -140}
+  m_SizeDelta: {x: 320, y: 72}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &8154410262753174003
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154410262753174001}
+  m_CullTransparentMesh: 1
+--- !u!114 &8154410262753174004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8154410262753174001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.06, g: 0.09, b: 0.14, a: 0.92}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 
 --- !u!1 &5300000040
 GameObject:
