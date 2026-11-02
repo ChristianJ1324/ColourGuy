@@ -2235,8 +2235,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &8800000004
-BoxCollider2D:
+--- !u!60 &8800000004
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2269,18 +2269,19 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.30117637, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     oldSize: {x: 1.24, y: 5.12}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6376473, y: 5.12}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths: []
+  m_UseDelaunayMesh: 0
 --- !u!50 &8800000005
 Rigidbody2D:
   serializedVersion: 5
@@ -2320,6 +2321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb170edcb1744519f202a7386cf50ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeWall
+  m_mainCamera: {fileID: 519420031}
 --- !u!1001 &3889922670089170879
 PrefabInstance:
   m_ObjectHideFlags: 0
