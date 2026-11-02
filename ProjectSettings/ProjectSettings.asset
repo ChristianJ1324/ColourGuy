@@ -168,7 +168,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.telegames.colourguy
+    Android: com.MDSS04.Telegames
     Standalone: com.DefaultCompany.2D-URP
   buildNumber:
     Standalone: 0
