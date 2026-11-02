@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
+    private const string c_highScoreKey = "ColourGuy.HighScoreMetres";
+
     [SerializeField] private PlayerInput m_playerInput;
     [SerializeField] private Rigidbody2D m_playerBody;
     [SerializeField] private PlayerLose m_playerLose;
@@ -17,14 +19,22 @@ public class GameController : MonoBehaviour
 
     private bool m_isGameOver;
     private bool m_hasStartedRun;
+    private float m_runDistanceMetres;
+    private int m_highScoreMetres;
     private ModuleSpawner m_moduleSpawner;
     private Coroutine m_reviveCountdown;
+
+    public int RunDistanceMetres => Mathf.FloorToInt(m_runDistanceMetres);
+    public int HighScoreMetres => m_highScoreMetres;
+    public bool HasHighScore => m_highScoreMetres > 0;
+    public bool IsRunActive => m_hasStartedRun && !m_isGameOver && Time.timeScale > 0f;
 
     private void Awake()
     {
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
         m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
+        m_highScoreMetres = PlayerPrefs.GetInt(c_highScoreKey, 0);
     }
 
     private void OnEnable()
@@ -48,9 +58,29 @@ public class GameController : MonoBehaviour
         m_playerInput.enabled = true;
     }
 
+    private void Update()
+    {
+        // Count distance as the modules move along the conveyor.
+        if (!IsRunActive)
+        {
+            return;
+        }
+
+        if (m_moduleSpawner == null)
+        {
+            m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
+        }
+
+        if (m_moduleSpawner != null)
+        {
+            m_runDistanceMetres += m_moduleSpawner.CurrentMoveSpeed * Time.deltaTime;
+        }
+    }
+
     public void StartGame()
     {
         StopReviveCountdown();
+        m_runDistanceMetres = 0f;
         if (m_hasStartedRun)
         {
             m_playerBody.GetComponent<PlayerColourSwitching>()?.StartNewRun();
@@ -81,6 +111,11 @@ public class GameController : MonoBehaviour
     public void ReturnToMenu(bool showInterstitial = false)
     {
         StopReviveCountdown();
+        if (m_hasStartedRun)
+        {
+            SaveHighScore();
+        }
+
         m_isGameOver = false;
         m_rewardedAd?.CancelPendingRewardedAd();
         ResetModules();
@@ -133,6 +168,7 @@ public class GameController : MonoBehaviour
         }
 
         m_isGameOver = true;
+        SaveHighScore();
         PauseGame();
         GameOver?.Invoke();
     }
@@ -177,4 +213,18 @@ public class GameController : MonoBehaviour
         m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
         m_moduleSpawner?.ResetModules();
     }
+
+    private void SaveHighScore()
+    {
+        int runDistanceMetres = RunDistanceMetres;
+        if (runDistanceMetres <= m_highScoreMetres)
+        {
+            return;
+        }
+
+        m_highScoreMetres = runDistanceMetres;
+        PlayerPrefs.SetInt(c_highScoreKey, m_highScoreMetres);
+        PlayerPrefs.Save();
+    }
+
 }

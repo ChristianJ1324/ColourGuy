@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text m_muteButtonLabel;
     [SerializeField, Min(1)] private int m_reviveCoinCost = 100;
     [SerializeField] private Button m_reviveWithCoinsButton;
+    [SerializeField] private Text m_distanceLabel;
+    [SerializeField] private Text m_gameOverStatsLabel;
 
     private GameController m_gameController;
     private Button m_privacyOptionsButton;
@@ -35,6 +37,7 @@ public class UIController : MonoBehaviour
     private string m_pauseTitleText;
     private string m_resumeButtonText;
     private string m_menuButtonText;
+    private int m_lastDistanceShown = -1;
     private bool m_isMuted;
     private bool m_isGamePaused;
     private bool m_isConfirmingQuit;
@@ -80,6 +83,11 @@ public class UIController : MonoBehaviour
     {
         LoadGameScene();
         RefreshPrivacyOptionsButton();
+    }
+
+    private void Update()
+    {
+        UpdateDistanceLabel();
     }
 
     public void PlayGame()
@@ -268,10 +276,22 @@ public class UIController : MonoBehaviour
     {
         m_isGamePaused = false;
         SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
+        SetPanelActive(m_distanceLabel != null ? m_distanceLabel.gameObject : null, false);
         SetPanelActive(m_pauseMenuPanel, false);
         SetPanelActive(m_pauseButton, false);
         SetPauseButtonIcon(false);
         SetPanelActive(m_gameOverPanel, true);
+
+        if (m_gameOverStatsLabel != null && m_gameController != null)
+        {
+            string stats = $"This run: {m_gameController.RunDistanceMetres} m";
+            if (m_gameController.HasHighScore)
+            {
+                stats += $"\nHigh score: {m_gameController.HighScoreMetres} m";
+            }
+
+            m_gameOverStatsLabel.text = stats;
+        }
 
         if (m_reviveWithCoinsButton != null)
         {
@@ -312,6 +332,28 @@ public class UIController : MonoBehaviour
     private void HandleReviveAdUnavailable()
     {
         SetReviveAdButtonState(false, "Ad unavailable");
+    }
+
+    private void UpdateDistanceLabel()
+    {
+        if (m_distanceLabel == null)
+        {
+            return;
+        }
+
+        bool isRunActive = m_gameController != null && m_gameController.IsRunActive;
+        SetPanelActive(m_distanceLabel.gameObject, isRunActive);
+        if (!isRunActive)
+        {
+            return;
+        }
+
+        int distance = m_gameController.RunDistanceMetres;
+        if (distance != m_lastDistanceShown)
+        {
+            m_distanceLabel.text = $"Metres: {distance}";
+            m_lastDistanceShown = distance;
+        }
     }
 
     private void SetReviveAdButtonState(bool isBusy, string label)
