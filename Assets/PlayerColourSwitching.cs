@@ -62,18 +62,10 @@ public class PlayerColourSwitching : MonoBehaviour
         }
 
     }
-    void Start()
-    {
-        Debug.Log($"Sensor body: {(m_sensor.attachedRigidbody != null ? m_sensor.attachedRigidbody.name : "NONE")}");
-        Debug.Log($"Hitbox body: {(m_hitbox.attachedRigidbody != null ? m_hitbox.attachedRigidbody.name : "NONE")}");
-        Debug.Log($"Same body? {m_sensor.attachedRigidbody == m_hitbox.attachedRigidbody}");
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Block>(out var block))
         {
-            Debug.Log($"Block Entered: {block.m_startingColour}");
             m_touchedBlocks++;
         }
     }
@@ -82,7 +74,6 @@ public class PlayerColourSwitching : MonoBehaviour
     {
         if (collision.TryGetComponent<Block>(out var block))
         {
-            Debug.Log($"Block Exit: {block.m_startingColour}");
             m_touchedBlocks--;
         }
     }

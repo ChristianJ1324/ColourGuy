@@ -33,7 +33,6 @@ public class ModuleSpawner : MonoBehaviour
 
     public void SpawnModule()
     {
-        Debug.Log($"Spawned Module #{transform.childCount}");
         // Will not spawn in modules if no modules to be spawned in
         if (m_ModulePrefabs.Count == 0) return;
         
