@@ -13,12 +13,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_pauseMenuPanel;
     [SerializeField] private GameObject m_pauseButton;
     [SerializeField] private GameObject m_muteButton;
+    [SerializeField] private Text m_pauseButtonLabel;
     [SerializeField] private Text m_muteButtonLabel;
 
     private GameController m_gameController;
     private Button m_privacyOptionsButton;
     private GameObject m_settingsReturnPanel;
     private bool m_isMuted;
+    private bool m_isGamePaused;
     private bool m_isLoadingGameScene;
     private bool m_startGameWhenLoaded;
 
@@ -37,6 +39,7 @@ public class UIController : MonoBehaviour
     private void Awake()
     {
         m_isMuted = AudioListener.pause;
+        SetPauseButtonIcon(false);
 
         if (m_muteButtonLabel != null)
         {
@@ -56,6 +59,8 @@ public class UIController : MonoBehaviour
 
     public void PlayGame()
     {
+        m_isGamePaused = false;
+        SetPauseButtonIcon(false);
         m_mainMenuPanel.SetActive(false);
         m_settingsMenuPanel.SetActive(false);
         m_helpMenuPanel.SetActive(false);
@@ -128,8 +133,10 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        m_isGamePaused = true;
         m_pauseMenuPanel.SetActive(true);
-        SetPanelActive(m_pauseButton, false);
+        SetPauseButtonIcon(true);
+        SetPanelActive(m_pauseButton, true);
         SetPanelActive(m_muteButton, true);
         if (m_gameController != null)
         {
@@ -139,9 +146,12 @@ public class UIController : MonoBehaviour
 
     public void ResumeGame()
     {
+        m_isGamePaused = false;
         m_pauseMenuPanel.SetActive(false);
+        SetPanelActive(m_settingsMenuPanel, false);
         SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseButton, true);
+        SetPauseButtonIcon(false);
         if (m_gameController != null)
         {
             m_gameController.ResumeGame();
@@ -150,17 +160,31 @@ public class UIController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        m_isGamePaused = false;
         m_pauseMenuPanel.SetActive(false);
         m_settingsMenuPanel.SetActive(false);
         m_mainMenuPanel.SetActive(true);
         SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseButton, false);
+        SetPauseButtonIcon(false);
         if (m_gameController != null)
         {
             m_gameController.ReturnToMenu();
         }
 
         SceneManager.SetActiveScene(gameObject.scene);
+    }
+
+    public void TogglePause()
+    {
+        if (m_isGamePaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            OpenPauseMenu();
+        }
     }
 
     public void ToggleMute()
@@ -233,6 +257,8 @@ public class UIController : MonoBehaviour
         if (m_startGameWhenLoaded && m_gameController != null)
         {
             m_startGameWhenLoaded = false;
+            m_isGamePaused = false;
+            SetPauseButtonIcon(false);
             m_gameController.StartGame();
             SetPanelActive(m_pauseButton, true);
         }
@@ -247,6 +273,14 @@ public class UIController : MonoBehaviour
         if (panel != null)
         {
             panel.SetActive(isActive);
+        }
+    }
+
+    private void SetPauseButtonIcon(bool isPaused)
+    {
+        if (m_pauseButtonLabel != null)
+        {
+            m_pauseButtonLabel.text = isPaused ? "▶" : "||";
         }
     }
 }
