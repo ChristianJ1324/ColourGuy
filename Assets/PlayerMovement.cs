@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     private Rigidbody2D playerRigidBody;
     private Collider2D playerCollider;
-    private RectTransform m_dashButtonRect;
+    private Image m_dashButtonImage;
+    private Color m_dashButtonOriginalColor;
+    private Text m_dashButtonLabel;
     private PlayerInput m_playerInput;
     private InputAction m_jumpAction;
     private Vector3 bottom;
@@ -22,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private const float c_blockHeight = 1f;
 
     [SerializeField] private GameObject m_dashButton;
-    [SerializeField] private RectTransform m_dashCooldownMask;
     [SerializeField, Min(0.01f)] private float m_dashDuration = 0.12f;
     [SerializeField, Min(0.01f)] private float m_dashSpeed = 6f;
     [SerializeField, Min(0.1f)] private float m_dashCooldown = 5f;
@@ -42,11 +44,14 @@ public class PlayerMovement : MonoBehaviour
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         m_playerInput = GetComponent<PlayerInput>();
-        m_dashButtonRect = m_dashButton != null ? m_dashButton.GetComponent<RectTransform>() : null;
-        if (m_dashCooldownMask != null)
+        m_dashButtonImage = m_dashButton != null ? m_dashButton.GetComponent<Image>() : null;
+        m_dashButtonLabel = m_dashButton != null ? m_dashButton.GetComponentInChildren<Text>(true) : null;
+        if (m_dashButtonImage != null)
         {
-            m_dashCooldownMask.gameObject.SetActive(false);
+            m_dashButtonOriginalColor = m_dashButtonImage.color;
         }
+
+        ResetDashCooldown();
     }
 
     // Update is called once per frame
@@ -142,6 +147,12 @@ public class PlayerMovement : MonoBehaviour
         UpdateDashCooldownVisual();
     }
 
+    public void ResetDashCooldown()
+    {
+        m_nextDashTime = 0f;
+        UpdateDashCooldownVisual();
+    }
+
     private void UpdateDashButton()
     {
         if (m_dashButton == null)
@@ -159,17 +170,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateDashCooldownVisual()
     {
-        if (m_dashCooldownMask == null || m_dashButtonRect == null)
+        if (m_dashButtonImage == null && m_dashButtonLabel == null)
         {
             return;
         }
 
         float remaining = Mathf.Max(0f, m_nextDashTime - Time.time);
         float progress = m_dashCooldown > 0f ? Mathf.Clamp01(remaining / m_dashCooldown) : 0f;
-        m_dashCooldownMask.SetSizeWithCurrentAnchors(
-            RectTransform.Axis.Horizontal,
-            m_dashButtonRect.rect.width * progress);
-        m_dashCooldownMask.gameObject.SetActive(progress > 0f);
+        if (m_dashButtonImage != null)
+        {
+            m_dashButtonImage.color = Color.Lerp(Color.black, m_dashButtonOriginalColor, 1f - progress);
+        }
+
+        if (m_dashButtonLabel != null)
+        {
+            m_dashButtonLabel.text = remaining > 0f ? "charging..." : "Dash";
+        }
     }
 
     private void CheckForGround()

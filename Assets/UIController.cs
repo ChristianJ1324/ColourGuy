@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     [SerializeField, Min(1)] private int m_reviveCoinCost = 100;
     [SerializeField] private Button m_reviveWithCoinsButton;
     [SerializeField] private Text m_distanceLabel;
+    [SerializeField] private GameObject m_distancePanel;
     [SerializeField] private Text m_gameOverStatsLabel;
 
     private GameController m_gameController;
@@ -278,6 +279,7 @@ public class UIController : MonoBehaviour
         m_isGamePaused = false;
         SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
         SetPanelActive(m_distanceLabel != null ? m_distanceLabel.gameObject : null, false);
+        SetPanelActive(m_distancePanel, false);
         SetPanelActive(m_pauseMenuPanel, false);
         SetPanelActive(m_pauseButton, false);
         SetPauseButtonIcon(false);
@@ -344,6 +346,7 @@ public class UIController : MonoBehaviour
 
         bool isRunActive = m_gameController != null && m_gameController.IsRunActive;
         SetPanelActive(m_distanceLabel.gameObject, isRunActive);
+        SetPanelActive(m_distancePanel, isRunActive);
         if (!isRunActive)
         {
             return;

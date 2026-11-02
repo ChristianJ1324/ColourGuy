@@ -82,6 +82,7 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         StopReviveCountdown();
+        m_playerBody.GetComponent<PlayerMovement>()?.ResetDashCooldown();
         m_runDistanceMetres = 0f;
         if (m_hasStartedRun)
         {
@@ -182,6 +183,7 @@ public class GameController : MonoBehaviour
     private void RevivePlayer()
     {
         ResetModules();
+        m_playerBody.GetComponent<PlayerMovement>()?.ResetDashCooldown();
         m_playerLose.Respawn();
         m_isGameOver = false;
         m_playerInput.enabled = false;
