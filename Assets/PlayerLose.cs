@@ -13,11 +13,6 @@ public class PlayerLose : MonoBehaviour
 
     private void Awake()
     {
-        if (m_mainCamera == null)
-        {
-            m_mainCamera = Camera.main;
-        }
-
         m_playerCollider = GetComponent<Collider2D>();
         m_playerBody = GetComponent<Rigidbody2D>();
         m_spawnPosition = transform.position;
@@ -25,21 +20,12 @@ public class PlayerLose : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (m_isDead || Time.timeScale <= 0f || (m_playerBody != null && !m_playerBody.simulated))
+        if (m_isDead || Time.timeScale <= 0f || !m_playerBody.simulated)
         {
             return;
         }
 
-        if (m_mainCamera == null)
-        {
-            m_mainCamera = Camera.main;
-            if (m_mainCamera == null)
-            {
-                return;
-            }
-        }
-
-        Bounds bounds = m_playerCollider != null ? m_playerCollider.bounds : new Bounds(transform.position, Vector3.zero);
+        Bounds bounds = m_playerCollider.bounds;
         float cameraDepth = Vector3.Dot(transform.position - m_mainCamera.transform.position, m_mainCamera.transform.forward);
         Vector3 cameraLeft = m_mainCamera.ViewportToWorldPoint(new Vector3(0f, 0.5f, cameraDepth));
         Vector3 cameraRight = m_mainCamera.ViewportToWorldPoint(new Vector3(1f, 0.5f, cameraDepth));
@@ -50,21 +36,28 @@ public class PlayerLose : MonoBehaviour
         if (bounds.min.x <= cameraLeft.x || bounds.min.y <= cameraBottom.y ||
             bounds.max.x >= cameraRight.x || bounds.max.y >= cameraTop.y)
         {
-            m_isDead = true;
-            PlayerDied?.Invoke();
+            Die();
         }
+    }
+
+    public void Die()
+    {
+        if (m_isDead || Time.timeScale <= 0f || !m_playerBody.simulated)
+        {
+            return;
+        }
+
+        m_isDead = true;
+        PlayerDied?.Invoke();
     }
 
     public void Respawn()
     {
         transform.position = m_spawnPosition;
 
-        if (m_playerBody != null)
-        {
-            m_playerBody.position = new Vector2(m_spawnPosition.x, m_spawnPosition.y);
-            m_playerBody.linearVelocity = Vector2.zero;
-            m_playerBody.angularVelocity = 0f;
-        }
+        m_playerBody.position = new Vector2(m_spawnPosition.x, m_spawnPosition.y);
+        m_playerBody.linearVelocity = Vector2.zero;
+        m_playerBody.angularVelocity = 0f;
 
         Physics2D.SyncTransforms();
         m_isDead = false;

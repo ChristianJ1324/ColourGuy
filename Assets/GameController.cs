@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private PlayerInput m_playerInput;
     [SerializeField] private Rigidbody2D m_playerBody;
     [SerializeField] private GameObject m_gameplayControls;
+    [SerializeField] private GameObject m_spikeWall;
     [SerializeField] private PlayerLose m_playerLose;
     [SerializeField] private AdRewarded m_rewardedAd;
     [SerializeField] private AdInterstitial m_interstitialAd;
@@ -33,27 +34,25 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        Application.targetFrameRate = 60;
+#endif
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
         m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
         m_highScoreMetres = PlayerPrefs.GetInt(c_highScoreKey, 0);
         SetGameplayControlsVisible(false);
+        m_spikeWall.SetActive(false);
     }
 
     private void OnEnable()
     {
-        if (m_playerLose != null)
-        {
-            m_playerLose.PlayerDied += HandlePlayerDied;
-        }
+        m_playerLose.PlayerDied += HandlePlayerDied;
     }
 
     private void OnDisable()
     {
-        if (m_playerLose != null)
-        {
-            m_playerLose.PlayerDied -= HandlePlayerDied;
-        }
+        m_playerLose.PlayerDied -= HandlePlayerDied;
     }
 
     void Start()
@@ -69,31 +68,24 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        if (m_moduleSpawner == null)
-        {
-            m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
-        }
-
-        if (m_moduleSpawner != null)
-        {
-            m_runDistanceMetres += m_moduleSpawner.CurrentMoveSpeed * Time.deltaTime;
-        }
+        m_runDistanceMetres += m_moduleSpawner.CurrentMoveSpeed * Time.deltaTime;
     }
 
     public void StartGame()
     {
         StopReviveCountdown();
         m_isAtMenu = false;
-        m_playerBody.GetComponent<PlayerMovement>()?.ResetDashCooldown();
+        m_playerBody.GetComponent<PlayerMovement>().ResetDashCooldown();
         m_runDistanceMetres = 0f;
         if (m_hasStartedRun)
         {
-            m_playerBody.GetComponent<PlayerColourSwitching>()?.StartNewRun();
+            m_playerBody.GetComponent<PlayerColourSwitching>().StartNewRun();
         }
         m_hasStartedRun = true;
         m_isGameOver = false;
         ResetModules();
-        m_moduleSpawner?.SetModuleMovement(true);
+        m_moduleSpawner.SetModuleMovement(true);
+        m_spikeWall.SetActive(true);
         m_playerLose.Respawn();
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
@@ -132,24 +124,24 @@ public class GameController : MonoBehaviour
 
         m_isGameOver = false;
         m_isAtMenu = true;
-        m_rewardedAd?.CancelPendingRewardedAd();
+        m_rewardedAd.CancelPendingRewardedAd();
         ResetModules();
-        m_moduleSpawner?.SetModuleMovement(false);
+        m_moduleSpawner.SetModuleMovement(true);
+        m_spikeWall.SetActive(false);
         SetGameplayControlsVisible(false);
         m_playerInput.enabled = false;
         m_playerBody.simulated = false;
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
 
         if (showInterstitial && m_hasStartedRun && UnityEngine.Random.Range(0, 5) == 0)
         {
-            m_interstitialAd?.ShowInterstitialAd();
+            m_interstitialAd.ShowInterstitialAd();
         }
     }
 
     public bool ReviveWithCoins(int coinCost)
     {
-        if (!m_isGameOver || InAppPurchaseController.Instance == null ||
-            !InAppPurchaseController.Instance.TrySpendCoins(coinCost))
+        if (!m_isGameOver || !InAppPurchaseController.Instance.TrySpendCoins(coinCost))
         {
             return false;
         }
@@ -160,7 +152,7 @@ public class GameController : MonoBehaviour
 
     public bool ReviveWithAd(Action onRevived, Action onUnavailable)
     {
-        if (!m_isGameOver || m_rewardedAd == null)
+        if (!m_isGameOver)
         {
             return false;
         }
@@ -193,7 +185,7 @@ public class GameController : MonoBehaviour
     private void RevivePlayer()
     {
         ResetModules();
-        m_playerBody.GetComponent<PlayerMovement>()?.ResetDashCooldown();
+        m_playerBody.GetComponent<PlayerMovement>().ResetDashCooldown();
         m_playerLose.Respawn();
         m_isGameOver = false;
         m_playerInput.enabled = false;
@@ -228,8 +220,7 @@ public class GameController : MonoBehaviour
     private void ResetModules()
     {
         // Rebuild the module line so each run starts from the same place.
-        m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
-        m_moduleSpawner?.ResetModules();
+        m_moduleSpawner.ResetModules();
     }
 
     private void SaveHighScore()
@@ -259,9 +250,6 @@ public class GameController : MonoBehaviour
 
     private void SetGameplayControlsVisible(bool isVisible)
     {
-        if (m_gameplayControls != null)
-        {
-            m_gameplayControls.SetActive(isVisible);
-        }
+        m_gameplayControls.SetActive(isVisible);
     }
 }
