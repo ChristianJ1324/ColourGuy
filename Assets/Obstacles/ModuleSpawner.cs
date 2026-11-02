@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -15,7 +14,10 @@ public class ModuleSpawner : MonoBehaviour
         // Spawn in starting modules
         while (transform.childCount < m_NumModules)
         {
-            SpawnModule();
+            if (!TrySpawnModule())
+            {
+                break;
+            }
         }
     }
 
@@ -25,7 +27,7 @@ public class ModuleSpawner : MonoBehaviour
         // Spawn in modules after they are destroyed 
         if (transform.childCount < m_NumModules)
         {
-            SpawnModule();
+            TrySpawnModule();
         }
 
 
@@ -33,11 +35,49 @@ public class ModuleSpawner : MonoBehaviour
 
     public void SpawnModule()
     {
+        TrySpawnModule();
+    }
+
+    private bool TrySpawnModule()
+    {
         // Will not spawn in modules if no modules to be spawned in
-        if (m_ModulePrefabs.Count == 0) return;
-        
+        if (m_ModulePrefabs == null || m_ModulePrefabs.Count == 0)
+        {
+            return false;
+        }
+
+        int validModuleCount = 0;
+        foreach (Module module in m_ModulePrefabs)
+        {
+            if (module != null)
+            {
+                validModuleCount++;
+            }
+        }
+
+        if (validModuleCount == 0)
+        {
+            return false;
+        }
+
         // Select a random module from the list
-        Module prefab = m_ModulePrefabs[Random.Range(0, m_ModulePrefabs.Count)];
+        int moduleIndex = Random.Range(0, validModuleCount);
+        Module prefab = null;
+        foreach (Module module in m_ModulePrefabs)
+        {
+            if (module == null)
+            {
+                continue;
+            }
+
+            if (moduleIndex == 0)
+            {
+                prefab = module;
+                break;
+            }
+
+            moduleIndex--;
+        }
 
         prefab.m_Movespeed = m_ModuleMoveSpeed;
 
@@ -51,5 +91,6 @@ public class ModuleSpawner : MonoBehaviour
 
         Vector3 pos = new Vector3(x, transform.position.y, 0f);
         Instantiate(prefab, pos, Quaternion.identity, transform);
+        return true;
     }
 }
