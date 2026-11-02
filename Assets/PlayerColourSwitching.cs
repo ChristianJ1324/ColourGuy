@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum Colour
 {
@@ -17,76 +17,68 @@ public class PlayerColourSwitching : MonoBehaviour
 
     private SpriteRenderer m_spriteRenderer;
     private PlayerInput m_playerInput;
+    [SerializeField] private Image m_colourPickerKnob;
     public Vector2 m_moveDirection;
 
     public Colour m_currentColour;
     public Collider2D m_hitbox;
-
-    public Collider2D m_sensor;
-    public int m_touchedBlocks = 0;
-    public bool m_canSwitchColour = true;
+    private Colour m_lastStartingColour;
+    private bool m_hasStartingColour;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_playerInput = GetComponent<PlayerInput>();
+        StartNewRun();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_canSwitchColour = m_touchedBlocks == 0;
-        if (m_canSwitchColour) // Only allow colour change when not inside a block
+        if (m_moveDirection == Vector2.zero)
         {
-            if (m_moveDirection.x == 0 && m_moveDirection.y == 0)
-            {
-                SetColorState(Colour.White); // default
-            }
-            else if (m_moveDirection.x < 0 && m_moveDirection.y >= 0) // top left
-            {
-                SetColorState(Colour.Red);
-            }
-            else if (m_moveDirection.x >= 0 && m_moveDirection.y >= 0) // top right
-            {
-                SetColorState(Colour.Blue);
-            }
-            else if (m_moveDirection.x < 0 && m_moveDirection.y < 0) // bottom left
-            {
-                SetColorState(Colour.Yellow);
-            }
-            else // bottom right
-            {
-                SetColorState(Colour.Green);
-            }
+            return;
+        }
+        else if (m_moveDirection.x < 0 && m_moveDirection.y >= 0) // top left
+        {
+            SetColorState(Colour.Red);
+        }
+        else if (m_moveDirection.x >= 0 && m_moveDirection.y >= 0) // top right
+        {
+            SetColorState(Colour.Blue);
+        }
+        else if (m_moveDirection.x < 0 && m_moveDirection.y < 0) // bottom left
+        {
+            SetColorState(Colour.Yellow);
+        }
+        else // bottom right
+        {
+            SetColorState(Colour.Green);
         }
 
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Block>(out var block))
-        {
-            m_touchedBlocks++;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Block>(out var block))
-        {
-            m_touchedBlocks--;
-        }
     }
 
     public void OnMove()
     {
         m_moveDirection = m_playerInput.actions["Move"].ReadValue<Vector2>();
         //Debug.Log(m_moveDirection);
-
-
-
     }
 
+    public void StartNewRun()
+    {
+        Colour startingColour;
+        do
+        {
+            startingColour = (Colour)Random.Range((int)Colour.Red, (int)Colour.Yellow + 1);
+        }
+        while (m_hasStartingColour && startingColour == m_lastStartingColour);
+
+        m_lastStartingColour = startingColour;
+        m_hasStartingColour = true;
+        m_moveDirection = Vector2.zero;
+        SetColorState(startingColour);
+    }
 
     public void SetColorState(Colour _colorState)
     {
@@ -108,11 +100,17 @@ public class PlayerColourSwitching : MonoBehaviour
                 m_hitbox.gameObject.layer = LayerMask.NameToLayer("Green");
                 m_spriteRenderer.color = Color.green;
                 break;
+            case Colour.White:
             default:
-                m_hitbox.gameObject.layer = LayerMask.NameToLayer("Default");
-                m_spriteRenderer.color = Color.white;
-                break;
+                return;
 
+        }
+
+        m_currentColour = _colorState;
+
+        if (m_colourPickerKnob != null)
+        {
+            m_colourPickerKnob.color = m_spriteRenderer.color;
         }
 
     }

@@ -13,7 +13,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_pauseMenuPanel;
     [SerializeField] private GameObject m_gameOverPanel;
     [SerializeField] private GameObject m_pauseButton;
-    [SerializeField] private GameObject m_muteButton;
     [SerializeField] private Text m_pauseButtonLabel;
     [SerializeField] private Text m_muteButtonLabel;
     [SerializeField, Min(1)] private int m_reviveCoinCost = 100;
@@ -21,9 +20,24 @@ public class UIController : MonoBehaviour
 
     private GameController m_gameController;
     private Button m_privacyOptionsButton;
+    private Button m_reviveWithAdButton;
+    private Text m_reviveWithAdButtonLabel;
+    private Text m_pauseTitleLabel;
+    private Text m_resumeButtonLabel;
+    private Text m_menuButtonLabel;
+    private Text m_reviveCountdownLabel;
+    private GameObject m_pauseSettingsButton;
+    private RectTransform m_resumeButtonRect;
+    private RectTransform m_menuButtonRect;
     private GameObject m_settingsReturnPanel;
+    private Vector2 m_resumeButtonPosition;
+    private Vector2 m_menuButtonPosition;
+    private string m_pauseTitleText;
+    private string m_resumeButtonText;
+    private string m_menuButtonText;
     private bool m_isMuted;
     private bool m_isGamePaused;
+    private bool m_isConfirmingQuit;
     private bool m_isLoadingGameScene;
     private bool m_startGameWhenLoaded;
 
@@ -40,6 +54,8 @@ public class UIController : MonoBehaviour
         if (m_gameController != null)
         {
             m_gameController.GameOver -= ShowGameOver;
+            m_gameController.ReviveCountdownChanged -= ShowReviveCountdown;
+            m_gameController.ReviveCountdownFinished -= FinishReviveCountdown;
         }
     }
 
@@ -47,6 +63,8 @@ public class UIController : MonoBehaviour
     {
         m_isMuted = AudioListener.pause;
         SetPauseButtonIcon(false);
+        CachePauseMenuControls();
+        CacheReviveControls();
 
         if (m_muteButtonLabel != null)
         {
@@ -54,7 +72,6 @@ public class UIController : MonoBehaviour
         }
 
         SetPanelActive(m_pauseButton, false);
-        SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseMenuPanel, false);
         SetPanelActive(m_gameOverPanel, false);
     }
@@ -67,6 +84,8 @@ public class UIController : MonoBehaviour
 
     public void PlayGame()
     {
+        ResetQuitConfirmation();
+        SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
         m_isGamePaused = false;
         SetPauseButtonIcon(false);
         m_mainMenuPanel.SetActive(false);
@@ -75,7 +94,6 @@ public class UIController : MonoBehaviour
         SetPanelActive(m_storeMenuPanel, false);
         SetPanelActive(m_pauseMenuPanel, false);
         SetPanelActive(m_gameOverPanel, false);
-        SetPanelActive(m_muteButton, false);
 
         if (m_gameController != null)
         {
@@ -142,11 +160,11 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        ResetQuitConfirmation();
         m_isGamePaused = true;
         m_pauseMenuPanel.SetActive(true);
         SetPauseButtonIcon(true);
         SetPanelActive(m_pauseButton, true);
-        SetPanelActive(m_muteButton, true);
         if (m_gameController != null)
         {
             m_gameController.PauseGame();
@@ -155,10 +173,15 @@ public class UIController : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (m_isConfirmingQuit)
+        {
+            CancelQuitConfirmation();
+            return;
+        }
+
         m_isGamePaused = false;
         m_pauseMenuPanel.SetActive(false);
         SetPanelActive(m_settingsMenuPanel, false);
-        SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseButton, true);
         SetPauseButtonIcon(false);
         if (m_gameController != null)
@@ -169,17 +192,37 @@ public class UIController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        if (m_isConfirmingQuit)
+        {
+            CompleteReturnToMainMenu();
+            return;
+        }
+
+        if (m_isGamePaused && m_pauseMenuPanel != null && m_pauseMenuPanel.activeSelf)
+        {
+            ShowQuitConfirmation();
+            return;
+        }
+
+        CompleteReturnToMainMenu();
+    }
+
+    private void CompleteReturnToMainMenu()
+    {
+        bool returningFromRun = m_isGamePaused ||
+            (m_gameOverPanel != null && m_gameOverPanel.activeSelf);
+        ResetQuitConfirmation();
         m_isGamePaused = false;
         m_pauseMenuPanel.SetActive(false);
         SetPanelActive(m_gameOverPanel, false);
         m_settingsMenuPanel.SetActive(false);
+        SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
         m_mainMenuPanel.SetActive(true);
-        SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseButton, false);
         SetPauseButtonIcon(false);
         if (m_gameController != null)
         {
-            m_gameController.ReturnToMenu();
+            m_gameController.ReturnToMenu(returningFromRun);
         }
 
         SceneManager.SetActiveScene(gameObject.scene);
@@ -195,7 +238,11 @@ public class UIController : MonoBehaviour
 
     public void ReviveWithAd()
     {
-        m_gameController?.ReviveWithAd(CloseGameOverPanel);
+        SetReviveAdButtonState(true, "Loading Ad...");
+        if (m_gameController == null || !m_gameController.ReviveWithAd(CloseGameOverPanel, HandleReviveAdUnavailable))
+        {
+            HandleReviveAdUnavailable();
+        }
     }
 
     public void TogglePause()
@@ -220,9 +267,9 @@ public class UIController : MonoBehaviour
     private void ShowGameOver()
     {
         m_isGamePaused = false;
+        SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
         SetPanelActive(m_pauseMenuPanel, false);
         SetPanelActive(m_pauseButton, false);
-        SetPanelActive(m_muteButton, false);
         SetPauseButtonIcon(false);
         SetPanelActive(m_gameOverPanel, true);
 
@@ -231,14 +278,156 @@ public class UIController : MonoBehaviour
             m_reviveWithCoinsButton.interactable = InAppPurchaseController.Instance != null &&
                 InAppPurchaseController.Instance.CoinBalance >= m_reviveCoinCost;
         }
+
+        SetReviveAdButtonState(false, "Watch Ad to Revive");
     }
 
     private void CloseGameOverPanel()
     {
         SetPanelActive(m_gameOverPanel, false);
+        SetPanelActive(m_pauseButton, false);
+        SetReviveAdButtonState(false, "Watch Ad to Revive");
+    }
+
+    private void ShowReviveCountdown(int seconds)
+    {
+        SetPanelActive(m_gameOverPanel, false);
+        SetPanelActive(m_pauseMenuPanel, false);
+        SetPanelActive(m_pauseButton, false);
+
+        if (m_reviveCountdownLabel != null)
+        {
+            m_reviveCountdownLabel.text = seconds.ToString();
+            m_reviveCountdownLabel.gameObject.SetActive(true);
+        }
+    }
+
+    private void FinishReviveCountdown()
+    {
+        SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
         SetPanelActive(m_pauseButton, true);
-        SetPanelActive(m_muteButton, false);
         SetPauseButtonIcon(false);
+    }
+
+    private void HandleReviveAdUnavailable()
+    {
+        SetReviveAdButtonState(false, "Ad unavailable");
+    }
+
+    private void SetReviveAdButtonState(bool isBusy, string label)
+    {
+        if (m_reviveWithAdButton != null)
+        {
+            m_reviveWithAdButton.interactable = !isBusy;
+        }
+
+        if (m_reviveWithAdButtonLabel != null)
+        {
+            m_reviveWithAdButtonLabel.text = label;
+        }
+    }
+
+    private void ShowQuitConfirmation()
+    {
+        m_isConfirmingQuit = true;
+        if (m_pauseTitleLabel != null)
+        {
+            m_pauseTitleLabel.text = "Are you sure you want to quit?";
+        }
+
+        if (m_resumeButtonLabel != null)
+        {
+            m_resumeButtonLabel.text = "No";
+        }
+
+        if (m_menuButtonLabel != null)
+        {
+            m_menuButtonLabel.text = "Yes";
+        }
+
+        if (m_resumeButtonRect != null)
+        {
+            m_resumeButtonRect.anchoredPosition = new Vector2(0f, 55f);
+        }
+
+        if (m_menuButtonRect != null)
+        {
+            m_menuButtonRect.anchoredPosition = new Vector2(0f, -55f);
+        }
+
+        SetPanelActive(m_pauseSettingsButton, false);
+    }
+
+    private void CancelQuitConfirmation()
+    {
+        ResetQuitConfirmation();
+        SetPanelActive(m_pauseButton, true);
+        SetPauseButtonIcon(true);
+    }
+
+    private void ResetQuitConfirmation()
+    {
+        m_isConfirmingQuit = false;
+        if (m_pauseTitleLabel != null)
+        {
+            m_pauseTitleLabel.text = m_pauseTitleText;
+        }
+
+        if (m_resumeButtonLabel != null)
+        {
+            m_resumeButtonLabel.text = m_resumeButtonText;
+        }
+
+        if (m_menuButtonLabel != null)
+        {
+            m_menuButtonLabel.text = m_menuButtonText;
+        }
+
+        if (m_resumeButtonRect != null)
+        {
+            m_resumeButtonRect.anchoredPosition = m_resumeButtonPosition;
+        }
+
+        if (m_menuButtonRect != null)
+        {
+            m_menuButtonRect.anchoredPosition = m_menuButtonPosition;
+        }
+
+        SetPanelActive(m_pauseSettingsButton, true);
+    }
+
+    private void CachePauseMenuControls()
+    {
+        if (m_pauseMenuPanel == null)
+        {
+            return;
+        }
+
+        Transform pauseTitle = m_pauseMenuPanel.transform.Find("PauseTitle");
+        Transform resumeButton = m_pauseMenuPanel.transform.Find("ResumeButton");
+        Transform settingsButton = m_pauseMenuPanel.transform.Find("PauseSettingsButton");
+        Transform menuButton = m_pauseMenuPanel.transform.Find("MenuButton");
+        m_pauseTitleLabel = pauseTitle != null ? pauseTitle.GetComponent<Text>() : null;
+        m_resumeButtonLabel = resumeButton != null ? resumeButton.GetComponentInChildren<Text>(true) : null;
+        m_menuButtonLabel = menuButton != null ? menuButton.GetComponentInChildren<Text>(true) : null;
+        m_pauseSettingsButton = settingsButton != null ? settingsButton.gameObject : null;
+        m_resumeButtonRect = resumeButton as RectTransform;
+        m_menuButtonRect = menuButton as RectTransform;
+        m_resumeButtonPosition = m_resumeButtonRect != null ? m_resumeButtonRect.anchoredPosition : Vector2.zero;
+        m_menuButtonPosition = m_menuButtonRect != null ? m_menuButtonRect.anchoredPosition : Vector2.zero;
+        m_pauseTitleText = m_pauseTitleLabel != null ? m_pauseTitleLabel.text : "Paused";
+        m_resumeButtonText = m_resumeButtonLabel != null ? m_resumeButtonLabel.text : "Resume";
+        m_menuButtonText = m_menuButtonLabel != null ? m_menuButtonLabel.text : "Menu";
+    }
+
+    private void CacheReviveControls()
+    {
+        Transform adButton = m_gameOverPanel != null ? m_gameOverPanel.transform.Find("ReviveWithAdButton") : null;
+        m_reviveWithAdButton = adButton != null ? adButton.GetComponent<Button>() : null;
+        m_reviveWithAdButtonLabel = adButton != null ? adButton.GetComponentInChildren<Text>(true) : null;
+        Transform countdown = transform.Find("ReviveCountdown");
+        m_reviveCountdownLabel = countdown != null ? countdown.GetComponent<Text>() : null;
+        SetPanelActive(m_reviveCountdownLabel != null ? m_reviveCountdownLabel.gameObject : null, false);
     }
 
     private void RefreshPrivacyOptionsButton()
@@ -253,7 +442,7 @@ public class UIController : MonoBehaviour
                 GameObject privacyButtonObject = Instantiate(source.gameObject, m_settingsMenuPanel.transform, false);
                 privacyButtonObject.name = "PrivacyOptionsButton";
                 RectTransform privacyRect = privacyButtonObject.GetComponent<RectTransform>();
-                privacyRect.anchoredPosition = new Vector2(0f, -300f);
+                privacyRect.anchoredPosition = new Vector2(0f, -355f);
 
                 m_privacyOptionsButton = privacyButtonObject.GetComponent<Button>();
                 m_privacyOptionsButton.onClick.RemoveAllListeners();
@@ -301,12 +490,16 @@ public class UIController : MonoBehaviour
         if (m_gameController != null)
         {
             m_gameController.GameOver -= ShowGameOver;
+            m_gameController.ReviveCountdownChanged -= ShowReviveCountdown;
+            m_gameController.ReviveCountdownFinished -= FinishReviveCountdown;
         }
 
         m_gameController = FindFirstObjectByType<GameController>();
         if (m_gameController != null)
         {
             m_gameController.GameOver += ShowGameOver;
+            m_gameController.ReviveCountdownChanged += ShowReviveCountdown;
+            m_gameController.ReviveCountdownFinished += FinishReviveCountdown;
         }
 
         SceneManager.SetActiveScene(gameObject.scene);

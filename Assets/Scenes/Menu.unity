@@ -218,33 +218,13 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5568628
       objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5300000037, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5300000039, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_Text
-      value: "Coins: 0"
+      value: 'Coins: 0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300000039, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5300000053, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_Color.b
@@ -409,10 +389,6 @@ PrefabInstance:
     - target: {fileID: 6951154378447231053, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_Name
       value: MenuUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8154410262753174002, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8154410262753174004, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_Color.b

@@ -7,6 +7,34 @@ public class ModuleSpawner : MonoBehaviour
     public float m_ModuleMoveSpeed = 0.1f;
     public int m_NumModules = 3; // Amount of modules that are loaded into the game at once, may need to be increased with screen size
     public float m_ModuleWidth = 2f; // TEMPLATE NUMBER CHANGE ME
+    private Vector3 m_startPosition;
+
+    public float CurrentMoveSpeed
+    {
+        get
+        {
+            if (Time.timeScale <= 0f)
+            {
+                return 0f;
+            }
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Module module = transform.GetChild(i).GetComponent<Module>();
+                if (module != null && module.isActiveAndEnabled)
+                {
+                    return module.m_Movespeed;
+                }
+            }
+
+            return 0f;
+        }
+    }
+
+    private void Awake()
+    {
+        m_startPosition = transform.position;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,7 +66,41 @@ public class ModuleSpawner : MonoBehaviour
         TrySpawnModule();
     }
 
+    public void ResetModules()
+    {
+        while (transform.childCount > 0)
+        {
+            Transform module = transform.GetChild(0);
+            module.gameObject.SetActive(false);
+            module.SetParent(null);
+            Destroy(module.gameObject);
+        }
+
+        for (int i = 0; i < m_NumModules; i++)
+        {
+            Vector3 position = m_startPosition + Vector3.right * (i * m_ModuleWidth);
+            if (!TrySpawnModule(position))
+            {
+                break;
+            }
+        }
+    }
+
     private bool TrySpawnModule()
+    {
+        float x = transform.position.x;
+
+        if (transform.childCount > 0)
+        {
+            Transform lastModule = transform.GetChild(transform.childCount - 1);
+            x = lastModule.position.x + m_ModuleWidth;
+        }
+
+        Vector3 pos = new Vector3(x, transform.position.y, 0f);
+        return TrySpawnModule(pos);
+    }
+
+    private bool TrySpawnModule(Vector3 position)
     {
         // Will not spawn in modules if no modules to be spawned in
         if (m_ModulePrefabs == null || m_ModulePrefabs.Count == 0)
@@ -80,17 +142,7 @@ public class ModuleSpawner : MonoBehaviour
         }
 
         prefab.m_Movespeed = m_ModuleMoveSpeed;
-
-        float x = transform.position.x;
-
-        if (transform.childCount > 0)
-        {
-            Transform lastModule = transform.GetChild(transform.childCount - 1);
-            x = lastModule.position.x + m_ModuleWidth;
-        }
-
-        Vector3 pos = new Vector3(x, transform.position.y, 0f);
-        Instantiate(prefab, pos, Quaternion.identity, transform);
+        Instantiate(prefab, position, Quaternion.identity, transform);
         return true;
     }
 }
