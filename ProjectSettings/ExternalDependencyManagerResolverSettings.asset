@@ -16,13 +16,13 @@ MonoBehaviour:
     verboseLogging:
       value: 0
     enableAutoResolution:
-      value: 0
+      value: 1
     autoResolveOnBuild:
       value: 0
     autoResolutionDisabledWarning:
       value: 1
     promptBeforeAutoResolution:
-      value: 1
+      value: 0
     patchAndroidManifest:
       value: 1
     useJetifier:

@@ -15,16 +15,43 @@ public class AdsConsentManager : MonoBehaviour
     public static bool IsInitialized => s_isInitialized;
     public static bool PrivacyOptionsRequired => s_privacyOptionsRequired;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        s_initializationStarted = false;
+        s_isInitialized = false;
+        s_privacyOptionsRequired = false;
+        AdsInitialized = null;
+        PrivacyOptionsStatusChanged = null;
+    }
+
     private void Start()
     {
 #if UNITY_EDITOR
-        return;
+        InitializeEditorAds();
 #else
         // Ask Google for consent before initializing ads.
         InitializeAdsIfAllowed();
         ConsentInformation.Update(new ConsentRequestParameters(), OnConsentInfoUpdated);
 #endif
     }
+
+#if UNITY_EDITOR
+    private static void InitializeEditorAds()
+    {
+        if (s_initializationStarted)
+        {
+            return;
+        }
+
+        s_initializationStarted = true;
+        MobileAds.Initialize(_ =>
+        {
+            s_isInitialized = true;
+            AdsInitialized?.Invoke();
+        });
+    }
+#endif
 
     private void OnConsentInfoUpdated(FormError error)
     {
