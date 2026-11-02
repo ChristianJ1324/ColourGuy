@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8a5fb4a448c4c82a8fd320a71e25b76, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AdsConsentManager
 --- !u!1 &280361523
 GameObject:
@@ -2316,8 +2316,128 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: m_ModuleWidth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModuleMoveSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: m_ModulePrefabs.Array.size
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 8022da95c17240e478b5a927133c63af, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: c6b4ed0fce934a2f9949c09947dd8d7d, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: bcfd77306da74e45a8f27b5a35dd00f6, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 706ac4bce1a3437dba5650bbc7b71e19, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: f6cc248581a5411dbf57e9bc8c4b0f16, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: a8b130b2a1744ec691142a81093047f6, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: a0f180e8a4d04240a298058650b8454c, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: b689b4564d2c4a44a5b5ac4634b22ee0, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[10]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 4e444256592349a992f9db5c728036e1, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[11]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 9791fa5f0d3a4e5c85341d54b45d9383, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[12]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: e3291916e0534edaa8453452c30157da, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[13]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 30d78547090b40ab88fca7466a961dbd, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[14]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 41513721acb74eeabc9328d0980cd85b, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[15]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 41513721acb74eeabc9328d0980cd85b, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[16]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: f69d404ecd0b4a888279731c857a5679, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[17]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: d8913b19d012484f84ba4ef45386d6d1, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[18]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: e4953001df2844538d8ea3d3e3b86d06, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[19]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: de12c05297154cd29572f169d6cc695d, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[20]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 61b47b1fdf8445f9a46659ecb86e70e2, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[21]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 7b4b3c2cabc54a63b59ee7696f183277, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[22]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: f83dfff1885e4daa9f5d8d3f45fe0b0b, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[23]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[24]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[25]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[26]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[27]'
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
