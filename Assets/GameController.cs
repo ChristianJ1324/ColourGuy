@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private PlayerInput m_playerInput;
     [SerializeField] private Rigidbody2D m_playerBody;
+    [SerializeField] private GameObject m_gameplayControls;
     [SerializeField] private PlayerLose m_playerLose;
     [SerializeField] private AdRewarded m_rewardedAd;
     [SerializeField] private AdInterstitial m_interstitialAd;
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour
         m_playerBody.simulated = true;
         m_moduleSpawner = FindFirstObjectByType<ModuleSpawner>();
         m_highScoreMetres = PlayerPrefs.GetInt(c_highScoreKey, 0);
+        SetGameplayControlsVisible(false);
     }
 
     private void OnEnable()
@@ -92,10 +94,12 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
         m_playerInput.enabled = true;
+        SetGameplayControlsVisible(true);
     }
 
     public void PauseGame()
     {
+        SetGameplayControlsVisible(false);
         m_playerInput.enabled = false;
         m_playerBody.simulated = false;
         Time.timeScale = 0f;
@@ -106,6 +110,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
         m_playerInput.enabled = true;
+        SetGameplayControlsVisible(true);
     }
 
     public void ReturnToMenu(bool showInterstitial = false)
@@ -119,6 +124,7 @@ public class GameController : MonoBehaviour
         m_isGameOver = false;
         m_rewardedAd?.CancelPendingRewardedAd();
         ResetModules();
+        SetGameplayControlsVisible(false);
         m_playerInput.enabled = false;
         m_playerBody.simulated = false;
         Time.timeScale = 0f;
@@ -239,4 +245,11 @@ public class GameController : MonoBehaviour
         m_runDistanceMetres = 0f;
     }
 
+    private void SetGameplayControlsVisible(bool isVisible)
+    {
+        if (m_gameplayControls != null)
+        {
+            m_gameplayControls.SetActive(isVisible);
+        }
+    }
 }
