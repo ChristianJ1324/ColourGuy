@@ -324,6 +324,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5558869140373371578}
+  - {fileID: 5300000401}
   - {fileID: 8424291188345737804}
   - {fileID: 4346242163256594929}
   - {fileID: 7965221986543733671}
@@ -572,7 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Settings
+  m_Text: <color=#FF0000>S</color><color=#FF7F00>e</color><color=#FFD500>t</color><color=#ADFF2F>t</color><color=#00C853>i</color><color=#00CFCF>n</color><color=#0077FF>g</color><color=#4B0082>s</color>
 --- !u!1 &1519212941750142169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1154,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Tap Play to begin.
+  m_Text: "Move forward automatically.\nUse the colour picker to match coloured blocks and phase through them.\nWhite blocks are solid, so jump over them.\nHold Jump longer to jump higher."
 --- !u!1 &4397346046925001469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1554,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Colour Guy
+  m_Text: <color=#FF0000>C</color><color=#FF7F00>o</color><color=#FFD500>l</color><color=#ADFF2F>o</color><color=#00C853>u</color><color=#00CFCF>r</color> <color=#0077FF>G</color><color=#4B0082>u</color><color=#8F00FF>y</color>
 --- !u!1 &6654061060059010835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,7 +1712,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Colour Guy
+  m_Text: <color=#FF0000>C</color><color=#FF7F00>o</color><color=#FFD500>l</color><color=#ADFF2F>o</color><color=#00C853>u</color><color=#00CFCF>r</color> <color=#0077FF>G</color><color=#4B0082>u</color><color=#8F00FF>y</color>
 --- !u!1 &6853345001570853877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,7 +2744,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: In-App Purchases
+  m_Text: <color=#FF0000>I</color><color=#FF7F00>n</color><color=#FFD500>-</color><color=#ADFF2F>A</color><color=#00C853>p</color><color=#00CFCF>p</color> <color=#0077FF>P</color><color=#4B0082>u</color><color=#8F00FF>r</color><color=#FF0000>c</color><color=#FF7F00>h</color><color=#FFD500>a</color><color=#ADFF2F>s</color><color=#00C853>e</color><color=#00CFCF>s</color>
 
 --- !u!1 &5300000030
 GameObject:
@@ -3488,7 +3489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Paused
+  m_Text: <color=#FF0000>P</color><color=#FF7F00>a</color><color=#FFD500>u</color><color=#ADFF2F>s</color><color=#00C853>e</color><color=#00CFCF>d</color>
 
 --- !u!1 &5300000070
 GameObject:
@@ -4718,7 +4719,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Game Over
+  m_Text: <color=#FF0000>G</color><color=#FF7F00>a</color><color=#FFD500>m</color><color=#ADFF2F>e</color> <color=#00C853>O</color><color=#00CFCF>v</color><color=#0077FF>e</color><color=#4B0082>r</color>
 
 --- !u!1 &5300000208
 GameObject:
@@ -5653,6 +5654,85 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "Buy Dash - $5.00"
+--- !u!1 &5300000400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5300000401}
+  - component: {fileID: 5300000402}
+  - component: {fileID: 5300000403}
+  m_Layer: 5
+  m_Name: ByTelegames
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5300000401
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300000400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1916285476056216932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -203}
+  m_SizeDelta: {x: 400, y: 40}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &5300000402
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300000400}
+  m_CullTransparentMesh: 1
+--- !u!114 &5300000403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300000400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 314d25824a4db2941802a96ba21bbfb2, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 1
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: By Telegames
 --- !u!1 &5300000500
 GameObject:
   m_ObjectHideFlags: 0
