@@ -1,66 +1,66 @@
+using System;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
 public class AdRewarded : MonoBehaviour
 {
-    // set how many demo coins a completed ad earns
-    [SerializeField, Min(1)] private int m_demoCoinsPerReward = 100;
+    [SerializeField, Min(1)]
+    private int m_coinsPerReward = 100;
 
-    private RewardedAd m_rewardedAd;
-    private string m_adUnitID = "ca-app-pub-3940256099942544/5224354917";
+    private const string c_testAdUnitID = "ca-app-pub-3940256099942544/5224354917";
+    private RewardedAd m_ad;
+    private bool m_isLoading;
 
-    private InitializationStatus m_initStatus;
+    public bool IsReady => m_ad != null && m_ad.CanShowAd();
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
+        AdsConsentManager.AdsInitialized += LoadRewardedAd;
+        if (AdsConsentManager.IsInitialized)
+        {
+            LoadRewardedAd();
+        }
+    }
 
-       MobileAds.Initialize(m_initStatus =>
-       {
-           print("Google ads are initialised");
-
-           // load rewarded ad on start
-           LoadRewardedAd();
-       });
+    private void OnDisable()
+    {
+        AdsConsentManager.AdsInitialized -= LoadRewardedAd;
+        CancelInvoke(nameof(LoadRewardedAd));
     }
 
     private void OnDestroy()
     {
-        CleanUp();
+        if (m_ad != null)
+        {
+            m_ad.Destroy();
+        }
     }
 
     public void LoadRewardedAd()
     {
-        // if ad exists, delete it
-        CleanUp();
+        if (m_isLoading || !AdsConsentManager.IsInitialized)
+        {
+            return;
+        }
 
-        print("loading Rewarded ad");
+        CancelInvoke(nameof(LoadRewardedAd));
+        m_ad?.Destroy();
+        m_ad = null;
+        m_isLoading = true;
 
-        var adRequest = new AdRequest();
-
-        RewardedAd.Load(
-            m_adUnitID,
-            adRequest,
-            (RewardedAd _ad, LoadAdError _err) =>
+        RewardedAd.Load(c_testAdUnitID, new AdRequest(), (ad, error) =>
+        {
+            m_isLoading = false;
+            if (error != null || ad == null)
             {
-                if (_err != null || _ad == null)
-                {
-                    // ad failed
-                    print("Rewarded ad failed to load. Error: " + _err);
-                    return;
-                }
-
-                // ad loaded
-                print("Rewarded ad loaded with response: " + _ad.GetResponseInfo());
-
-                m_rewardedAd = _ad;
-
-                // register event listeners
-                AdRewardedEventListeners(m_rewardedAd);
+                Invoke(nameof(LoadRewardedAd), 5f);
+                return;
             }
-        );
+
+            m_ad = ad;
+            m_ad.OnAdFullScreenContentClosed += LoadRewardedAd;
+            m_ad.OnAdFullScreenContentFailed += _ => LoadRewardedAd();
+        });
     }
 
     public void DoRewardedAd()
@@ -70,60 +70,18 @@ public class AdRewarded : MonoBehaviour
 
     public bool ShowRewardedAd()
     {
-        if (m_rewardedAd != null && m_rewardedAd.CanShowAd())
+        return ShowAd(() => InAppPurchaseController.AddCoins(m_coinsPerReward));
+    }
+
+    private bool ShowAd(Action onReward)
+    {
+        if (!IsReady)
         {
-            Debug.Log("Showing Ad");
-            m_rewardedAd.Show((Reward _reward) =>
-            {
-                // add coins only after the ad gives its reward
-                InAppPurchaseController.AddDemoCoins(m_demoCoinsPerReward);
-                print($"Ad reward user: type: {_reward.Type}, amount: {_reward.Amount}");
-            });
-            return true;
-        }
-        else
-        {
-            Debug.Log("Showing Ad failed. ad not ready");
             return false;
         }
+
+        // Grant the reward only when the ad finishes.
+        m_ad.Show(_ => onReward?.Invoke());
+        return true;
     }
-
-
-    public void AdRewardedEventListeners(RewardedAd _ad)
-    {
-        _ad.OnAdClicked += () =>
-        {
-            print("ad clicked");
-        };
-        _ad.OnAdFullScreenContentOpened += () =>
-        {
-            print("ad opened");
-        };
-        _ad.OnAdFullScreenContentClosed += () =>
-        {
-            print("ad closed");
-
-            // reload the ad to show another one asap
-            LoadRewardedAd();
-        };
-        _ad.OnAdFullScreenContentFailed += (AdError _err) =>
-        {
-            print("ad failed , error: " + _err);
-
-            // reload the ad to show another one asap
-            LoadRewardedAd();
-        };
-    }
-
-    private void CleanUp()
-    {
-        // cleanup
-        if (m_rewardedAd != null)
-        {
-            m_rewardedAd.Destroy();
-            m_rewardedAd = null;
-        }
-    }
-
-
 }
