@@ -86,6 +86,14 @@ public class ModuleSpawner : MonoBehaviour
         }
     }
 
+    public void SetModuleMovement(bool isEnabled)
+    {
+        foreach (Module module in GetComponentsInChildren<Module>(true))
+        {
+            module.enabled = isEnabled;
+        }
+    }
+
     private bool TrySpawnModule()
     {
         float x = transform.position.x;

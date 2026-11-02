@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     private bool m_isGameOver;
     private bool m_hasStartedRun;
+    private bool m_isAtMenu = true;
     private float m_runDistanceMetres;
     private int m_highScoreMetres;
     private ModuleSpawner m_moduleSpawner;
@@ -28,7 +29,7 @@ public class GameController : MonoBehaviour
     public int RunDistanceMetres => Mathf.FloorToInt(m_runDistanceMetres);
     public int HighScoreMetres => m_highScoreMetres;
     public bool HasHighScore => m_highScoreMetres > 0;
-    public bool IsRunActive => m_hasStartedRun && !m_isGameOver && Time.timeScale > 0f;
+    public bool IsRunActive => m_hasStartedRun && !m_isAtMenu && !m_isGameOver && Time.timeScale > 0f;
 
     private void Awake()
     {
@@ -82,6 +83,7 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         StopReviveCountdown();
+        m_isAtMenu = false;
         m_playerBody.GetComponent<PlayerMovement>()?.ResetDashCooldown();
         m_runDistanceMetres = 0f;
         if (m_hasStartedRun)
@@ -91,6 +93,7 @@ public class GameController : MonoBehaviour
         m_hasStartedRun = true;
         m_isGameOver = false;
         ResetModules();
+        m_moduleSpawner?.SetModuleMovement(true);
         m_playerLose.Respawn();
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
@@ -108,6 +111,11 @@ public class GameController : MonoBehaviour
 
     public void ResumeGame()
     {
+        if (m_isAtMenu || m_isGameOver)
+        {
+            return;
+        }
+
         Time.timeScale = 1f;
         m_playerBody.simulated = true;
         m_playerInput.enabled = true;
@@ -123,8 +131,10 @@ public class GameController : MonoBehaviour
         }
 
         m_isGameOver = false;
+        m_isAtMenu = true;
         m_rewardedAd?.CancelPendingRewardedAd();
         ResetModules();
+        m_moduleSpawner?.SetModuleMovement(false);
         SetGameplayControlsVisible(false);
         m_playerInput.enabled = false;
         m_playerBody.simulated = false;
