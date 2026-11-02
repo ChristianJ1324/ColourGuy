@@ -81,6 +81,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        CreateClearDataButton();
         LoadGameScene();
         RefreshPrivacyOptionsButton();
     }
@@ -502,6 +503,42 @@ public class UIController : MonoBehaviour
         {
             m_privacyOptionsButton.gameObject.SetActive(required);
         }
+    }
+
+    private void CreateClearDataButton()
+    {
+        if (m_settingsMenuPanel == null || m_settingsMenuPanel.transform.Find("ClearDataButton") != null)
+        {
+            return;
+        }
+
+        Transform source = m_settingsMenuPanel.transform.Find("SoundEffectsButton");
+        if (source == null)
+        {
+            return;
+        }
+
+        GameObject clearButtonObject = Instantiate(source.gameObject, m_settingsMenuPanel.transform, false);
+        clearButtonObject.name = "ClearDataButton";
+        RectTransform clearButtonRect = clearButtonObject.GetComponent<RectTransform>();
+        clearButtonRect.anchoredPosition = new Vector2(0f, -150f);
+
+        Button clearButton = clearButtonObject.GetComponent<Button>();
+        clearButton.onClick = new Button.ButtonClickedEvent();
+        clearButton.onClick.AddListener(ClearLocalData);
+
+        Text clearButtonLabel = clearButtonObject.GetComponentInChildren<Text>(true);
+        if (clearButtonLabel != null)
+        {
+            clearButtonLabel.text = "Clear Data";
+        }
+    }
+
+    private void ClearLocalData()
+    {
+        InAppPurchaseController.ClearSavedGameData();
+        GameController.ClearSavedHighScore();
+        m_gameController?.ResetScoreAfterDataClear();
     }
 
     private void LoadGameScene()

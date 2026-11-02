@@ -227,4 +227,16 @@ public class GameController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public static void ClearSavedHighScore()
+    {
+        PlayerPrefs.DeleteKey(c_highScoreKey);
+        PlayerPrefs.Save();
+    }
+
+    public void ResetScoreAfterDataClear()
+    {
+        m_highScoreMetres = 0;
+        m_runDistanceMetres = 0f;
+    }
+
 }

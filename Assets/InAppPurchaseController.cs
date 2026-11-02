@@ -32,6 +32,19 @@ public class InAppPurchaseController : MonoBehaviour
     public bool HasDash => PlayerPrefs.GetInt(c_dashOwnedKey, 0) == 1;
     public bool IsPurchaseInProgress => m_isBuying;
 
+    public static void ClearSavedGameData()
+    {
+        PlayerPrefs.DeleteKey(c_balanceKey);
+        PlayerPrefs.DeleteKey(c_dashOwnedKey);
+        PlayerPrefs.Save();
+
+        if (s_instance != null)
+        {
+            s_instance.UpdateBalanceLabel();
+            s_instance.UpdateBuyButton();
+        }
+    }
+
     private void Awake()
     {
         if (s_instance != null && s_instance != this)
