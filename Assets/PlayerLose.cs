@@ -3,31 +3,39 @@ using UnityEngine;
 
 public class PlayerLose : MonoBehaviour
 {
+    private const float c_deathBoundary = -12f;
 
     public event Action PlayerDied;
 
-    bool isDead = false;
+    private Rigidbody2D m_playerBody;
+    private Vector3 m_spawnPosition;
+    private bool m_isDead;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
+        m_playerBody = GetComponent<Rigidbody2D>();
+        m_spawnPosition = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (transform.position.x < -12)
+        if (!m_isDead && transform.position.x < c_deathBoundary)
         {
-            Debug.Log("Player has died");
-            PlayerDied.Invoke();
-            isDead = true;
+            m_isDead = true;
+            PlayerDied?.Invoke();
         }
     }
 
     public void Respawn()
     {
-        if (!isDead) return;
-        // to be implemented -- reload level but continue with score?
+        transform.position = m_spawnPosition;
+
+        if (m_playerBody != null)
+        {
+            m_playerBody.linearVelocity = Vector2.zero;
+            m_playerBody.angularVelocity = 0f;
+        }
+
+        m_isDead = false;
     }
 }

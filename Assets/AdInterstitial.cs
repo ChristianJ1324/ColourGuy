@@ -52,14 +52,10 @@ public class AdInterstitial : MonoBehaviour
             }
 
             m_ad = ad;
+            // Have the next ad ready after this one closes.
             m_ad.OnAdFullScreenContentClosed += LoadInterstitialAd;
             m_ad.OnAdFullScreenContentFailed += _ => LoadInterstitialAd();
         });
-    }
-
-    public void DoInterstitialAd()
-    {
-        ShowInterstitialAd();
     }
 
     public bool ShowInterstitialAd()

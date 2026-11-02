@@ -11,10 +11,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_helpMenuPanel;
     [SerializeField] private GameObject m_storeMenuPanel;
     [SerializeField] private GameObject m_pauseMenuPanel;
+    [SerializeField] private GameObject m_gameOverPanel;
     [SerializeField] private GameObject m_pauseButton;
     [SerializeField] private GameObject m_muteButton;
     [SerializeField] private Text m_pauseButtonLabel;
     [SerializeField] private Text m_muteButtonLabel;
+    [SerializeField, Min(1)] private int m_reviveCoinCost = 100;
+    [SerializeField] private Button m_reviveWithCoinsButton;
 
     private GameController m_gameController;
     private Button m_privacyOptionsButton;
@@ -34,6 +37,10 @@ public class UIController : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         AdsConsentManager.PrivacyOptionsStatusChanged -= RefreshPrivacyOptionsButton;
+        if (m_gameController != null)
+        {
+            m_gameController.GameOver -= ShowGameOver;
+        }
     }
 
     private void Awake()
@@ -49,6 +56,7 @@ public class UIController : MonoBehaviour
         SetPanelActive(m_pauseButton, false);
         SetPanelActive(m_muteButton, false);
         SetPanelActive(m_pauseMenuPanel, false);
+        SetPanelActive(m_gameOverPanel, false);
     }
 
     private void Start()
@@ -66,6 +74,7 @@ public class UIController : MonoBehaviour
         m_helpMenuPanel.SetActive(false);
         SetPanelActive(m_storeMenuPanel, false);
         SetPanelActive(m_pauseMenuPanel, false);
+        SetPanelActive(m_gameOverPanel, false);
         SetPanelActive(m_muteButton, false);
 
         if (m_gameController != null)
@@ -162,6 +171,7 @@ public class UIController : MonoBehaviour
     {
         m_isGamePaused = false;
         m_pauseMenuPanel.SetActive(false);
+        SetPanelActive(m_gameOverPanel, false);
         m_settingsMenuPanel.SetActive(false);
         m_mainMenuPanel.SetActive(true);
         SetPanelActive(m_muteButton, false);
@@ -173,6 +183,19 @@ public class UIController : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(gameObject.scene);
+    }
+
+    public void ReviveWithCoins()
+    {
+        if (m_gameController != null && m_gameController.ReviveWithCoins(m_reviveCoinCost))
+        {
+            CloseGameOverPanel();
+        }
+    }
+
+    public void ReviveWithAd()
+    {
+        m_gameController?.ReviveWithAd(CloseGameOverPanel);
     }
 
     public void TogglePause()
@@ -192,6 +215,30 @@ public class UIController : MonoBehaviour
         m_isMuted = !m_isMuted;
         AudioListener.pause = m_isMuted;
         m_muteButtonLabel.text = m_isMuted ? "Unmute" : "Mute";
+    }
+
+    private void ShowGameOver()
+    {
+        m_isGamePaused = false;
+        SetPanelActive(m_pauseMenuPanel, false);
+        SetPanelActive(m_pauseButton, false);
+        SetPanelActive(m_muteButton, false);
+        SetPauseButtonIcon(false);
+        SetPanelActive(m_gameOverPanel, true);
+
+        if (m_reviveWithCoinsButton != null)
+        {
+            m_reviveWithCoinsButton.interactable = InAppPurchaseController.Instance != null &&
+                InAppPurchaseController.Instance.CoinBalance >= m_reviveCoinCost;
+        }
+    }
+
+    private void CloseGameOverPanel()
+    {
+        SetPanelActive(m_gameOverPanel, false);
+        SetPanelActive(m_pauseButton, true);
+        SetPanelActive(m_muteButton, false);
+        SetPauseButtonIcon(false);
     }
 
     private void RefreshPrivacyOptionsButton()
@@ -251,7 +298,17 @@ public class UIController : MonoBehaviour
         }
 
         m_isLoadingGameScene = false;
+        if (m_gameController != null)
+        {
+            m_gameController.GameOver -= ShowGameOver;
+        }
+
         m_gameController = FindFirstObjectByType<GameController>();
+        if (m_gameController != null)
+        {
+            m_gameController.GameOver += ShowGameOver;
+        }
+
         SceneManager.SetActiveScene(gameObject.scene);
 
         if (m_startGameWhenLoaded && m_gameController != null)

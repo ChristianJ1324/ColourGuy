@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AdRewarded : MonoBehaviour
 {
-    [SerializeField, Min(1)]
-    private int m_coinsPerReward = 100;
-
     private const string c_testAdUnitID = "ca-app-pub-3940256099942544/5224354917";
     private RewardedAd m_ad;
     private bool m_isLoading;
@@ -63,17 +60,7 @@ public class AdRewarded : MonoBehaviour
         });
     }
 
-    public void DoRewardedAd()
-    {
-        ShowRewardedAd();
-    }
-
-    public bool ShowRewardedAd()
-    {
-        return ShowAd(() => InAppPurchaseController.AddCoins(m_coinsPerReward));
-    }
-
-    private bool ShowAd(Action onReward)
+    public bool ShowRewardedAd(Action onReward)
     {
         if (!IsReady)
         {
