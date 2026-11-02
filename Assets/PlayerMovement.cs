@@ -33,11 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump()//InputAction.CallbackContext context)
     {
-        Debug.Log("Jump attempt");
-        Debug.Log("is on ground: " + isOnGround);
         if (isOnGround)
         {
-            Debug.Log("jump succeed");
             playerRigidBody.linearVelocity = Vector2.up * jumpForce;
         }
     }

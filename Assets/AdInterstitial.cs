@@ -3,60 +3,58 @@ using UnityEngine;
 
 public class AdInterstitial : MonoBehaviour
 {
-    private InterstitialAd m_interstitialAd;
-    private string m_adUnitID = "ca-app-pub-3940256099942544/1033173712";
+    private const string c_testAdUnitID = "ca-app-pub-3940256099942544/1033173712";
+    private InterstitialAd m_ad;
+    private bool m_isLoading;
 
-    private InitializationStatus m_initStatus;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
-        // init ads
-        MobileAds.Initialize(m_initStatus =>
+        AdsConsentManager.AdsInitialized += LoadInterstitialAd;
+        if (AdsConsentManager.IsInitialized)
         {
-            print("Google ads are initialised");
-
-            // load interstitial ad on start
             LoadInterstitialAd();
-        });
+        }
+    }
+
+    private void OnDisable()
+    {
+        AdsConsentManager.AdsInitialized -= LoadInterstitialAd;
+        CancelInvoke(nameof(LoadInterstitialAd));
     }
 
     private void OnDestroy()
     {
-        CleanUp();
+        if (m_ad != null)
+        {
+            m_ad.Destroy();
+        }
     }
 
     public void LoadInterstitialAd()
     {
-        // if ad exists, delete it
-        CleanUp();
+        if (m_isLoading || !AdsConsentManager.IsInitialized)
+        {
+            return;
+        }
 
-        print("loading interstitial ad");
+        CancelInvoke(nameof(LoadInterstitialAd));
+        m_ad?.Destroy();
+        m_ad = null;
+        m_isLoading = true;
 
-        var adRequest = new AdRequest();
-
-        InterstitialAd.Load(
-            m_adUnitID,
-            adRequest,
-            (InterstitialAd _ad, LoadAdError _err) =>
+        InterstitialAd.Load(c_testAdUnitID, new AdRequest(), (ad, error) =>
+        {
+            m_isLoading = false;
+            if (error != null || ad == null)
             {
-                if (_err != null || _ad == null)
-                {
-                    // ad failed
-                    print("interstitial ad failed to load. Error: " + _err);
-                    return;
-                }
-
-                // ad loaded
-                print("Interstitial ad loaded with response: " + _ad.GetResponseInfo());
-
-                m_interstitialAd = _ad;
-
-                // register event listeners
-                AdInterstitialEventListeners(m_interstitialAd);
+                Invoke(nameof(LoadInterstitialAd), 5f);
+                return;
             }
-        );
+
+            m_ad = ad;
+            m_ad.OnAdFullScreenContentClosed += LoadInterstitialAd;
+            m_ad.OnAdFullScreenContentFailed += _ => LoadInterstitialAd();
+        });
     }
 
     public void DoInterstitialAd()
@@ -66,55 +64,12 @@ public class AdInterstitial : MonoBehaviour
 
     public bool ShowInterstitialAd()
     {
-        if (m_interstitialAd != null && m_interstitialAd.CanShowAd())
+        if (m_ad == null || !m_ad.CanShowAd())
         {
-            Debug.Log("Showing Ad");
-            m_interstitialAd.Show();
-            return true;
-        }
-        else
-        {
-            Debug.Log("Showing Ad failed. ad not ready");
             return false;
         }
+
+        m_ad.Show();
+        return true;
     }
-
-
-    public void AdInterstitialEventListeners(InterstitialAd _ad)
-    {
-        _ad.OnAdClicked += () =>
-        {
-            print("ad clicked");
-        };
-        _ad.OnAdFullScreenContentOpened += () =>
-        {
-            print("ad opened");
-        };
-        _ad.OnAdFullScreenContentClosed += () =>
-        {
-            print("ad closed");
-
-            // reload the ad to show another one asap
-            LoadInterstitialAd();
-        };
-        _ad.OnAdFullScreenContentFailed += (AdError _err) =>
-        {
-            print("ad failed , error: " + _err);
-
-            // reload the ad to show another one asap
-            LoadInterstitialAd();
-        };
-    }
-
-    private void CleanUp()
-    {
-        // cleanup
-        if (m_interstitialAd != null)
-        {
-            m_interstitialAd.Destroy();
-            m_interstitialAd = null;
-        }
-    }
-
-
 }

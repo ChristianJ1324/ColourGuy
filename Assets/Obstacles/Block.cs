@@ -18,7 +18,6 @@ public class Block : MonoBehaviour
     void OnValidate()
     {
         // Automatically change Colour of Block when Enum is updated in editor
-        Debug.Log($"Colour changed to {m_startingColour}");
         ChangeColour(m_startingColour, true);
         // When a Block is added to a module, the colours are randomized and remapped
         // all blue blocks may become red
@@ -41,6 +40,7 @@ public class Block : MonoBehaviour
             Colour.Blue => Color.blue,
             Colour.Yellow => Color.yellow,
             Colour.White => Color.white,
+            _ => Color.white,
         };
         // Adjust Collision Mask to match Colour
         GetComponent<Rigidbody2D>().excludeLayers = _newColour switch
@@ -50,6 +50,7 @@ public class Block : MonoBehaviour
             Colour.Blue => LayerMask.GetMask("Blue"),
             Colour.Yellow => LayerMask.GetMask("Yellow"),
             Colour.White => LayerMask.GetMask("Nothing"),
+            _ => LayerMask.GetMask("Nothing"),
         };
     }
 }

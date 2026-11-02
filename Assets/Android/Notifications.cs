@@ -34,7 +34,6 @@ public class Notifications : MonoBehaviour
             PermissionCallbacks callbacks = new PermissionCallbacks();
             callbacks.PermissionGranted += (string _name) => { havePerm = true; };
             callbacks.PermissionDenied += (string _name) => { havePerm = false; };
-            callbacks.PermissionDeniedAndDontAskAgain += (string _name) => { havePerm = false; };
 
             // ask permission
             Permission.RequestUserPermission(notiPerm, callbacks);

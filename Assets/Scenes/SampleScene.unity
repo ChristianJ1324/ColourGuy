@@ -344,6 +344,7 @@ GameObject:
   - component: {fileID: 67941312}
   - component: {fileID: 67941314}
   - component: {fileID: 67941313}
+  - component: {fileID: 67941315}
   m_Layer: 0
   m_Name: AdManager
   m_TagString: Untagged
@@ -378,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f503ad08631fa704b8067ccebd5b72bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AdRewarded
-  m_demoCoinsPerReward: 100
+  m_coinsPerReward: 100
 --- !u!114 &67941314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +392,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d12e082dc5d754a4da391c21a789c186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ad
+--- !u!114 &67941315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67941310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a5fb4a448c4c82a8fd320a71e25b76, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::AdsConsentManager
 --- !u!1 &280361523
 GameObject:
   m_ObjectHideFlags: 0

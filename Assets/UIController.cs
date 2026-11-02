@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text m_muteButtonLabel;
 
     private GameController m_gameController;
+    private Button m_privacyOptionsButton;
     private GameObject m_settingsReturnPanel;
     private bool m_isMuted;
     private bool m_isLoadingGameScene;
@@ -24,11 +25,13 @@ public class UIController : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        AdsConsentManager.PrivacyOptionsStatusChanged += RefreshPrivacyOptionsButton;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        AdsConsentManager.PrivacyOptionsStatusChanged -= RefreshPrivacyOptionsButton;
     }
 
     private void Awake()
@@ -48,6 +51,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         LoadGameScene();
+        RefreshPrivacyOptionsButton();
     }
 
     public void PlayGame()
@@ -73,6 +77,7 @@ public class UIController : MonoBehaviour
 
     public void OpenSettings()
     {
+        RefreshPrivacyOptionsButton();
         m_settingsReturnPanel = m_pauseMenuPanel != null && m_pauseMenuPanel.activeSelf
             ? m_pauseMenuPanel
             : m_mainMenuPanel;
@@ -107,6 +112,11 @@ public class UIController : MonoBehaviour
 
     public void CloseStore()
     {
+        if (InAppPurchaseController.Instance != null && InAppPurchaseController.Instance.IsPurchaseInProgress)
+        {
+            return;
+        }
+
         m_storeMenuPanel.SetActive(false);
         m_mainMenuPanel.SetActive(true);
     }
@@ -158,6 +168,38 @@ public class UIController : MonoBehaviour
         m_isMuted = !m_isMuted;
         AudioListener.pause = m_isMuted;
         m_muteButtonLabel.text = m_isMuted ? "Unmute" : "Mute";
+    }
+
+    private void RefreshPrivacyOptionsButton()
+    {
+        // Add the privacy button when required.
+        bool required = AdsConsentManager.PrivacyOptionsRequired;
+        if (required && m_privacyOptionsButton == null && m_settingsMenuPanel != null)
+        {
+            Transform source = m_settingsMenuPanel.transform.Find("SoundEffectsButton");
+            if (source != null)
+            {
+                GameObject privacyButtonObject = Instantiate(source.gameObject, m_settingsMenuPanel.transform, false);
+                privacyButtonObject.name = "PrivacyOptionsButton";
+                RectTransform privacyRect = privacyButtonObject.GetComponent<RectTransform>();
+                privacyRect.anchoredPosition = new Vector2(0f, -300f);
+
+                m_privacyOptionsButton = privacyButtonObject.GetComponent<Button>();
+                m_privacyOptionsButton.onClick.RemoveAllListeners();
+                m_privacyOptionsButton.onClick.AddListener(AdsConsentManager.ShowPrivacyOptions);
+
+                Text privacyLabel = privacyButtonObject.GetComponentInChildren<Text>(true);
+                if (privacyLabel != null)
+                {
+                    privacyLabel.text = "Privacy Options";
+                }
+            }
+        }
+
+        if (m_privacyOptionsButton != null)
+        {
+            m_privacyOptionsButton.gameObject.SetActive(required);
+        }
     }
 
     private void LoadGameScene()
