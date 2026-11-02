@@ -18,6 +18,7 @@ public class PlayerColourSwitching : MonoBehaviour
     private SpriteRenderer m_spriteRenderer;
     private PlayerInput m_playerInput;
     [SerializeField] private Image m_colourPickerKnob;
+    [SerializeField, Min(0f)] private float m_rollSpeed = 360f;
     public Vector2 m_moveDirection;
 
     public Colour m_currentColour;
@@ -28,7 +29,7 @@ public class PlayerColourSwitching : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_playerInput = GetComponent<PlayerInput>();
         StartNewRun();
     }
@@ -36,6 +37,8 @@ public class PlayerColourSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_spriteRenderer.transform.Rotate(0f, 0f, -m_rollSpeed * Time.deltaTime);
+
         if (m_moveDirection == Vector2.zero)
         {
             return;

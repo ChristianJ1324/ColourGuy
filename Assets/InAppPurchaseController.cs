@@ -291,7 +291,7 @@ public class InAppPurchaseController : MonoBehaviour
         {
             balanceTab.SetSizeWithCurrentAnchors(
                 RectTransform.Axis.Horizontal,
-                Mathf.Max(160f, m_coinBalanceLabel.preferredWidth + 48f));
+                Mathf.Max(180f, m_coinBalanceLabel.preferredWidth + 68f));
         }
     }
 
