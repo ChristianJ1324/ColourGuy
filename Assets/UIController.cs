@@ -542,6 +542,8 @@ public class UIController : MonoBehaviour
         InAppPurchaseController.ClearSavedGameData();
         GameController.ClearSavedHighScore();
         m_gameController?.ResetScoreAfterDataClear();
+
+        DailyRewardController.ClearSavedTimeData();
     }
 
     private void LoadGameScene()
