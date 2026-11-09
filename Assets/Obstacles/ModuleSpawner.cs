@@ -6,7 +6,7 @@ public class ModuleSpawner : MonoBehaviour
     public List<Module> m_ModulePrefabs; 
     public float m_ModuleMoveSpeed = 0.1f;
     public int m_NumModules = 3; // Amount of modules that are loaded into the game at once, may need to be increased with screen size
-    public float m_ModuleWidth = 2f; // TEMPLATE NUMBER CHANGE ME
+    public float m_GapWidth = 2f; // TEMPLATE NUMBER CHANGE ME
     private Vector3 m_startPosition;
 
     public float CurrentMoveSpeed
@@ -65,7 +65,6 @@ public class ModuleSpawner : MonoBehaviour
     {
         TrySpawnModule();
     }
-
     public void ResetModules()
     {
         while (transform.childCount > 0)
@@ -76,10 +75,14 @@ public class ModuleSpawner : MonoBehaviour
             Destroy(module.gameObject);
         }
 
-        for (int i = 0; i < m_NumModules; i++)
+        if (!TrySpawnModule(m_startPosition))
         {
-            Vector3 position = m_startPosition + Vector3.right * (i * m_ModuleWidth);
-            if (!TrySpawnModule(position))
+            return;
+        }
+
+        for (int i = 1; i < m_NumModules; i++)
+        {
+            if (!TrySpawnModule())
             {
                 break;
             }
@@ -96,16 +99,18 @@ public class ModuleSpawner : MonoBehaviour
 
     private bool TrySpawnModule()
     {
-        float x = transform.position.x;
+        float leftEdge = transform.position.x;
 
         if (transform.childCount > 0)
         {
-            Transform lastModule = transform.GetChild(transform.childCount - 1);
-            x = lastModule.position.x + m_ModuleWidth;
+            Module last = transform.GetChild(transform.childCount - 1).GetComponent<Module>();
+            if (last != null)
+            {
+                leftEdge = last.GetBounds().max.x + m_GapWidth;
+            }
         }
 
-        Vector3 pos = new Vector3(x, transform.position.y, 0f);
-        return TrySpawnModule(pos);
+        return TrySpawnModule(new Vector3(leftEdge, transform.position.y, 0f));
     }
 
     private bool TrySpawnModule(Vector3 position)

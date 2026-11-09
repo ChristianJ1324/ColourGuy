@@ -380,7 +380,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 2.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2422,7 +2422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModuleMoveSpeed
-      value: 1
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModulePrefabs.Array.size
@@ -2431,11 +2431,11 @@ PrefabInstance:
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 8503ee462422e0c4aae58c652d5fbc57, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: b69a2157faa07e14e920d2584e80b872, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[2]'
       value: 
@@ -2523,23 +2523,23 @@ PrefabInstance:
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[23]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: b69a2157faa07e14e920d2584e80b872, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[24]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 8511edf449fb6c543a6d3b31f9552920, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[25]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 6171eb56504e1cb4781e9470668d8cf6, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[26]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 570e992955e43df4086fd0a5dacdebcf, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[27]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 6bdae89d1644b4242a5802fd576db00e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
