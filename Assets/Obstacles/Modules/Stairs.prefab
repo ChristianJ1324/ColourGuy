@@ -1,57 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3151937109789727180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9077748318117608406}
-  - component: {fileID: 1280520151341843590}
-  m_Layer: 0
-  m_Name: Module 5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9077748318117608406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3151937109789727180}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1405758759005037145}
-  - {fileID: 5837690422413922930}
-  - {fileID: 7918503862125618091}
-  - {fileID: 6790778579347889662}
-  - {fileID: 3082223326650737771}
-  - {fileID: 5736343610273681594}
-  m_Father: {fileID: 3034578091762278506}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1280520151341843590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3151937109789727180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4488312978a4b14d950cf762282aa82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Module
-  m_RandomColour: 1
-  m_Movespeed: 1
 --- !u!1 &8636204783052503017
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +30,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9077748318117608406}
+  - {fileID: 1405758759005037145}
+  - {fileID: 5837690422413922930}
+  - {fileID: 7918503862125618091}
+  - {fileID: 6790778579347889662}
+  - {fileID: 3082223326650737771}
+  - {fileID: 5736343610273681594}
   - {fileID: 6984211809733144793}
   - {fileID: 1583884266598321120}
   m_Father: {fileID: 0}
@@ -101,13 +54,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   m_RandomColour: 1
   m_Movespeed: 1
+  m_Width: 0
 --- !u!1001 &1937953271162517531
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -117,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2615874204119335, guid: e92653dcb01e93848a0852db12051606, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -189,7 +147,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -199,6 +157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8166710274925509176, guid: b2d671813720aeb4cbcafa86364d4506, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -282,6 +244,10 @@ PrefabInstance:
       value: Block (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8166710274925509176, guid: b2d671813720aeb4cbcafa86364d4506, type: 3}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
@@ -364,6 +330,10 @@ PrefabInstance:
       value: Block
       objectReference: {fileID: 0}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8166710274925509176, guid: b2d671813720aeb4cbcafa86364d4506, type: 3}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
@@ -435,7 +405,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -445,6 +415,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2615874204119335, guid: e92653dcb01e93848a0852db12051606, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -517,7 +491,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -527,6 +501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2615874204119335, guid: e92653dcb01e93848a0852db12051606, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -599,7 +577,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -609,6 +587,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2615874204119335, guid: e92653dcb01e93848a0852db12051606, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -681,7 +663,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 9077748318117608406}
+    m_TransformParent: {fileID: 3034578091762278506}
     m_Modifications:
     - target: {fileID: 1495569073653781814, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -691,6 +673,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8166710274925509176, guid: b2d671813720aeb4cbcafa86364d4506, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 0

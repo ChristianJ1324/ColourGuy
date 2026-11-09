@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_jumpAction;
     private Vector3 bottom;
     private bool canJump;
-    private bool m_isChargingJump;
     private bool m_isDashing;
     private bool m_dashButtonVisible;
     private float m_dashEndTime;
@@ -23,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float m_jumpStartY;
 
     private const float c_blockHeight = 1f;
+    private const float c_blockjumpamount = 1.8f;
 
     [SerializeField] private GameObject m_dashButton;
     [SerializeField, Min(0.01f)] private float m_dashDuration = 0.12f;
@@ -61,18 +61,6 @@ public class PlayerMovement : MonoBehaviour
         UpdateDashButton();
         UpdateDashCooldownVisual();
 
-        if (m_isChargingJump)
-        {
-            if (!playerRigidBody.simulated)
-            {
-                m_isChargingJump = false;
-            }
-            else if (!IsJumpPressed())
-            {
-                FinishJump();
-            }
-        }
-
         if (m_isDashing && !playerRigidBody.simulated)
         {
             m_isDashing = false;
@@ -86,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump()//InputAction.CallbackContext context)
     {
-        if (m_isChargingJump || !IsJumpPressed() || !playerRigidBody.simulated)
+        if (!playerRigidBody.simulated)
         {
             return;
         }
@@ -94,13 +82,12 @@ public class PlayerMovement : MonoBehaviour
         CheckForGround();
         if (canJump)
         {
-            m_isChargingJump = true;
             m_jumpStartTime = Time.time;
             m_jumpStartY = transform.position.y;
 
             float gravity = Mathf.Abs(Physics2D.gravity.y) * playerRigidBody.gravityScale;
-            float threeBlockVelocity = Mathf.Sqrt(2f * gravity * c_blockHeight * 3f);
-            playerRigidBody.linearVelocity = Vector2.up * Mathf.Min(jumpForce, threeBlockVelocity);
+            float jumpVelocity = Mathf.Sqrt(2f * gravity * c_blockHeight * c_blockjumpamount);
+            playerRigidBody.linearVelocity = Vector2.up * Mathf.Min(jumpForce, jumpVelocity);
         }
     }
 
@@ -119,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
             playerRigidBody.linearVelocity = new Vector2(0f, releaseVelocity);
         }
 
-        m_isChargingJump = false;
     }
 
     private bool IsJumpPressed()

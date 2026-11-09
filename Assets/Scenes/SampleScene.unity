@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 0.0010604858, y: -0.001045227}
+  m_SizeDelta: {x: 234.75, y: 234.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8937667
 MonoBehaviour:
@@ -380,7 +380,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 2.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1448,8 +1448,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 54.6864, y: 24.224548}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 67.4057, y: 46.362274}
+  m_SizeDelta: {x: 234.7464, y: 234.75}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1406854135
 MonoBehaviour:
@@ -1526,8 +1526,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -265, y: 158.5}
-  m_SizeDelta: {x: 320, y: 180}
+  m_AnchoredPosition: {x: -346.73914, y: 163.73727}
+  m_SizeDelta: {x: 483.4783, y: 190.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715623133
 MonoBehaviour:
@@ -2422,7 +2422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModuleMoveSpeed
-      value: 1
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModulePrefabs.Array.size
@@ -2431,11 +2431,11 @@ PrefabInstance:
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 8503ee462422e0c4aae58c652d5fbc57, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: b69a2157faa07e14e920d2584e80b872, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[2]'
       value: 
@@ -2523,23 +2523,23 @@ PrefabInstance:
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[23]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: b69a2157faa07e14e920d2584e80b872, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[24]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 8511edf449fb6c543a6d3b31f9552920, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[25]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 6171eb56504e1cb4781e9470668d8cf6, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[26]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 570e992955e43df4086fd0a5dacdebcf, type: 3}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[27]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8445046209077851235, guid: 6bdae89d1644b4242a5802fd576db00e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

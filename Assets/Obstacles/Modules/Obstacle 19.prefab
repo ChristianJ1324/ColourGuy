@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Module
   m_RandomColour: 1
   m_Movespeed: 1
+  m_Width: 0
 --- !u!1001 &3511612966260324922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,6 +66,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8425141836431729757, guid: a1cb261fdcfe1f4439209e5bb4b7e43d, type: 3}
     - target: {fileID: 2170442987068535715, guid: d1135f633ee0dac4db90e7de08e0cfae, type: 3}
       propertyPath: m_Color.b
       value: 0.015686275

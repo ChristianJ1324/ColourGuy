@@ -42,6 +42,15 @@ public class Block : MonoBehaviour
             Colour.White => Color.white,
             _ => Color.white,
         };
+        GetComponent<SpriteRenderer>().sprite = _newColour switch
+        {
+            Colour.Red => Resources.Load<Sprite>("BlockSprites/red"),
+            Colour.Green => Resources.Load<Sprite>("BlockSprites/green"),
+            Colour.Blue => Resources.Load<Sprite>("BlockSprites/blue"),
+            Colour.Yellow => Resources.Load<Sprite>("BlockSprites/yellow"),
+            Colour.White => Resources.Load<Sprite>("BlockSprites/white"),
+            _ => Resources.Load<Sprite>("BlockSprites/white"),
+        };
         // Adjust Collision Mask to match Colour
         GetComponent<Rigidbody2D>().excludeLayers = _newColour switch
         {

@@ -10,6 +10,7 @@ public class Module : MonoBehaviour
 
     public float m_Movespeed = 0.1f;
 
+    public float m_Width = 0f; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +18,7 @@ public class Module : MonoBehaviour
         // Randomize Colours 
         RemapColours();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -29,7 +31,7 @@ public class Module : MonoBehaviour
         transform.position = position;
 
         // Destroy Module if too far off Screen
-        if (position.x < -12)// TODO ADD MODULE SIZE and REPLACE WITH ACTUAL EDGE OF SCREEN
+        if (GetBounds().max.x < -12)// TODO ADD MODULE SIZE and REPLACE WITH ACTUAL EDGE OF SCREEN
         {
             Destroy(gameObject);
         }
@@ -75,5 +77,21 @@ public class Module : MonoBehaviour
             // Change colour of non-white blocks
             if (map.TryGetValue(block.m_startingColour, out var newColour)) block.ChangeColour(newColour);
         }
+    }
+
+    public Bounds GetBounds()
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0)
+        {
+            return new Bounds(transform.position, Vector3.zero);
+        }
+
+        Bounds combined = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+        {
+            combined.Encapsulate(renderers[i].bounds);
+        }
+        return combined;
     }
 }
