@@ -97,6 +97,16 @@ public class ModuleSpawner : MonoBehaviour
         }
     }
 
+    public void SetModuleMoveSpeed(float moveSpeed)
+    {
+        m_ModuleMoveSpeed = moveSpeed;
+        // Existing pieces need the new pace too or they drift away from the next spawn
+        foreach (Module module in GetComponentsInChildren<Module>(true))
+        {
+            module.m_Movespeed = moveSpeed;
+        }
+    }
+
     private bool TrySpawnModule()
     {
         float leftEdge = transform.position.x;
