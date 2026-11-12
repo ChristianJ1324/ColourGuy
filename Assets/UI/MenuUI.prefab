@@ -3609,7 +3609,6 @@ RectTransform:
   - {fileID: 4346242163256594929}
   - {fileID: 7965221986543733671}
   - {fileID: 5300000001}
-  - {fileID: 7529555225802606135}
   m_Father: {fileID: 3648407848640360235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4830,9 +4829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Daily Login
-
-'
+  m_text: Daily login Ready to Claim!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2543e681abf71fc40b8070fbb2906f6c, type: 2}
   m_sharedMaterial: {fileID: -4829184800729130541, guid: 2543e681abf71fc40b8070fbb2906f6c, type: 2}
@@ -5263,6 +5260,7 @@ RectTransform:
   - {fileID: 5300000051}
   - {fileID: 5300000101}
   - {fileID: 8154410262753174002}
+  - {fileID: 7529555225802606135}
   - {fileID: 5300000601}
   - {fileID: 5300000501}
   - {fileID: 5300000201}
@@ -5793,13 +5791,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6893001366262099945}
-  m_Father: {fileID: 1916285476056216932}
+  m_Father: {fileID: 3648407848640360235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 551, y: -117}
-  m_SizeDelta: {x: 160, y: 133.88501}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -20, y: -130}
+  m_SizeDelta: {x: 247.0969, y: 102.5302}
+  m_Pivot: {x: 1, y: 1}
 --- !u!222 &3121020498251018779
 CanvasRenderer:
   m_ObjectHideFlags: 0
