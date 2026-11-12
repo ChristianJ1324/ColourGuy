@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private bool canJump;
     private bool m_hasJumpedSinceGrounded;
     private bool m_isDashing;
-    private bool m_dashButtonVisible;
     private float m_dashEndTime;
     private float m_nextDashTime;
     private float m_jumpStartTime;
@@ -127,8 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDash()
     {
-        if (InAppPurchaseController.Instance == null || !InAppPurchaseController.Instance.HasDash ||
-            !playerRigidBody.simulated || Time.time < m_nextDashTime)
+        if (!playerRigidBody.simulated || Time.time < m_nextDashTime)
         {
             return;
         }
@@ -153,11 +151,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        bool hasDash = InAppPurchaseController.Instance != null && InAppPurchaseController.Instance.HasDash;
-        if (m_dashButtonVisible != hasDash)
+        if (!m_dashButton.activeSelf)
         {
-            m_dashButtonVisible = hasDash;
-            m_dashButton.SetActive(hasDash);
+            m_dashButton.SetActive(true);
         }
     }
 

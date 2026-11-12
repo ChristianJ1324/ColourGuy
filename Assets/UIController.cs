@@ -164,11 +164,6 @@ public class UIController : MonoBehaviour
 
     public void CloseStore()
     {
-        if (InAppPurchaseController.Instance != null && InAppPurchaseController.Instance.IsPurchaseInProgress)
-        {
-            return;
-        }
-
         m_storeMenuPanel.SetActive(false);
         m_mainMenuPanel.SetActive(true);
     }
