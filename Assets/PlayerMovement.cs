@@ -82,6 +82,11 @@ public class PlayerMovement : MonoBehaviour
         CheckForGround();
         if (canJump)
         {
+            if (GameAudioController.Instance != null)
+            {
+                GameAudioController.Instance.PlayJump();
+            }
+
             m_jumpStartTime = Time.time;
             m_jumpStartY = transform.position.y;
 

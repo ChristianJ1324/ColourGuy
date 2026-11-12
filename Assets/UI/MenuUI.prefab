@@ -5449,6 +5449,7 @@ GameObject:
   - component: {fileID: 289849253904444027}
   - component: {fileID: 3071116990508500414}
   - component: {fileID: 8844731556902713047}
+  - component: {fileID: 7000000001}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -5591,6 +5592,21 @@ MonoBehaviour:
   m_buyCoinsButton: {fileID: 5300000034}
   m_buyDashButton: {fileID: 5300000304}
   m_coinBalanceLabel: {fileID: 5300000039}
+--- !u!114 &7000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951154378447231053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ab2d0e8c7b49ce91483f89bf014937, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::GameAudioController
+  m_musicTrack: {fileID: 8300000, guid: b5e8339f7c073f144903259e134c445b, type: 3}
+  m_buttonPressSound: {fileID: 8300000, guid: bcf469573b84f9e4da1766963ec343b3, type: 3}
+  m_jumpSound: {fileID: 8300000, guid: 85f1e007e906ab342ab77479a96da921, type: 3}
 --- !u!1 &6988491853388710642
 GameObject:
   m_ObjectHideFlags: 0
