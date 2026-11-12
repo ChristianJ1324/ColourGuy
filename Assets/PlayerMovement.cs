@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_jumpAction;
     private Vector3 bottom;
     private bool canJump;
+    private bool m_hasJumpedSinceGrounded;
     private bool m_isDashing;
     private bool m_dashButtonVisible;
     private float m_dashEndTime;
@@ -80,8 +81,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         CheckForGround();
-        if (canJump)
+        if (canJump && !m_hasJumpedSinceGrounded)
         {
+            m_hasJumpedSinceGrounded = true;
             if (GameAudioController.Instance != null)
             {
                 GameAudioController.Instance.PlayJump();
@@ -188,7 +190,15 @@ public class PlayerMovement : MonoBehaviour
         isOnGround = Physics2D.Raycast(bottom, Vector2.down, groundCheckDistance, groundLayer) ||
                      Physics2D.Raycast(bottom + Vector3.left * (bounds.extents.x - inset), Vector2.down, groundCheckDistance, groundLayer) ||
                      Physics2D.Raycast(bottom + Vector3.right * (bounds.extents.x - inset), Vector2.down, groundCheckDistance, groundLayer);
-        canJump = isOnGround;
+        canJump = isOnGround && playerRigidBody.linearVelocity.y <= 0f;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (playerRigidBody.linearVelocity.y <= 0f && collision.contactCount > 0 && collision.GetContact(0).normal.y > 0.5f)
+        {
+            m_hasJumpedSinceGrounded = false;
+        }
     }
 
     private void OnDrawGizmosSelected()
