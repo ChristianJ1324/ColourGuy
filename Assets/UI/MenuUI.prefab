@@ -5895,11 +5895,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DailyRewardController
   m_button: {fileID: 6126088186660878894}
   m_buttonText: {fileID: 0}
-  m_cooldownMinutesTotal: 1
-  m_reward: 10
+  m_cooldownMinutesTotal: 480
+  m_reward: 50
   m_notificationManager: {fileID: 877334338736239321}
-  m_notificationTitle: Notification Title
-  m_notificationText: Notification Text
+  m_notificationTitle: Daily Reward Avaliable
+  m_notificationText: Play now and claim 50 free coins!
 --- !u!114 &877334338736239321
 MonoBehaviour:
   m_ObjectHideFlags: 0
