@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.VisualScripting;
+
+
 
 // this script uses player pref and device local time. players can cheat by changing local time on their device.
 // TODO: use network time to prevent cheating
@@ -11,10 +14,17 @@ public class DailyRewardController : MonoBehaviour
     public Button m_button;
     public TextMeshProUGUI m_buttonText;
     static string m_lastClaimedRewardTimeKey = "LastClaimedRewardTime";
-    [SerializeField] double m_cooldownMinutesTotal = 1;
-    [SerializeField] int m_reward = 10;
     TimeSpan m_cooldownTimeRemaining;
     string m_readyLabel;
+
+    [Header("Time data")]
+    [SerializeField] double m_cooldownMinutesTotal = 1;
+    [SerializeField] int m_reward = 10;
+
+    [Header("Notifcation data")]
+    [SerializeField] Notifications m_notificationManager;
+    [SerializeField] string m_notificationTitle = "Notification Title";
+    [SerializeField] string m_notificationText = "Notification Text";
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -80,6 +90,9 @@ public class DailyRewardController : MonoBehaviour
         PlayerPrefs.Save();
 
         UpdateRemainingTime();
+
+        // schedule notifcation
+        m_notificationManager.SendNotification(m_notificationTitle, m_notificationText, DateTime.Now.AddMinutes(m_cooldownMinutesTotal));
 
         // disable button
         DisableButton();

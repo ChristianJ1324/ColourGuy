@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using Unity.Notifications.Android;
 using UnityEngine;
@@ -9,6 +10,12 @@ public class Notifications : MonoBehaviour
     public bool havePerm;
 
     private string notiPerm = "android.permission.POST_NOTIFICATIONS";
+
+    private void Start()
+    {
+        // coroutine to check for permission
+        StartCoroutine(RequestPermission());
+    }
 
     public IEnumerator RequestPermission()
     {
@@ -34,6 +41,7 @@ public class Notifications : MonoBehaviour
             PermissionCallbacks callbacks = new PermissionCallbacks();
             callbacks.PermissionGranted += (string _name) => { havePerm = true; };
             callbacks.PermissionDenied += (string _name) => { havePerm = false; };
+            //callbacks.PermissionDeniedAndDontAskAgain += (string _name) => { havePerm = false; };
 
             // ask permission
             Permission.RequestUserPermission(notiPerm, callbacks);
@@ -60,11 +68,19 @@ public class Notifications : MonoBehaviour
 
     public void SendNotification(string _title, string _text)
     {
+        SendNotification(_title, _text, System.DateTime.Now.AddSeconds(1));
+    }
+
+    public void SendNotification(string _title, string _text, DateTime _time)
+    {
         var notification = new AndroidNotification();
         notification.Title = _title;
         notification.Text = _text;
-        notification.FireTime = System.DateTime.Now.AddSeconds(1);
+        notification.FireTime = _time;
 
         AndroidNotificationCenter.SendNotification(notification, "channel_id");
+
+        // debug message
+        Debug.Log("Notifaction scheduled for" + _time.ToString());
     }
 }

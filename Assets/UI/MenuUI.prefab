@@ -5386,7 +5386,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29ab2d0e8c7b49ce91483f89bf014937, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameAudioController
   m_musicTrack: {fileID: 8300000, guid: b5e8339f7c073f144903259e134c445b, type: 3}
   m_buttonPressSound: {fileID: 8300000, guid: bcf469573b84f9e4da1766963ec343b3, type: 3}
@@ -5771,6 +5771,7 @@ GameObject:
   - component: {fileID: 7802104424423424035}
   - component: {fileID: 6126088186660878894}
   - component: {fileID: 4290866619438121858}
+  - component: {fileID: 877334338736239321}
   m_Layer: 5
   m_Name: DailyLoginButton
   m_TagString: Untagged
@@ -5894,7 +5895,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DailyRewardController
   m_button: {fileID: 6126088186660878894}
   m_buttonText: {fileID: 0}
-  m_cooldownMinutesTotal: 120
+  m_cooldownMinutesTotal: 1
+  m_reward: 10
+  m_notificationManager: {fileID: 877334338736239321}
+  m_notificationTitle: Notification Title
+  m_notificationText: Notification Text
+--- !u!114 &877334338736239321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291072515969946609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676a28c545ab64e47b9774e573f2ebff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Notifications
+  havePerm: 0
 --- !u!1 &8732805082058756174
 GameObject:
   m_ObjectHideFlags: 0
