@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93e91063f5f047b4a11ef4c18dd32a27, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovableColourPicker
   m_colourBackground: {fileID: 8937666}
   m_handle: {fileID: 885528552}
@@ -2407,7 +2407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModulePrefabs.Array.size
-      value: 28
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: 'm_ModulePrefabs.Array.data[0]'
@@ -2521,6 +2521,30 @@ PrefabInstance:
       propertyPath: 'm_ModulePrefabs.Array.data[27]'
       value: 
       objectReference: {fileID: 8445046209077851235, guid: 6bdae89d1644b4242a5802fd576db00e, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[28]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: bc9d10228bc505143a76fd0ff0112b71, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[29]'
+      value: 
+      objectReference: {fileID: 558819285696784028, guid: cc0369559243618449c471206942caba, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[30]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 6eeded2f302483d4494404c178f4259d, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[31]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 7d3009c7e5864a1408639cdf2932582b, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[32]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 914a3cbdeb433bd4aaa4defa3f4140c1, type: 3}
+    - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
+      propertyPath: 'm_ModulePrefabs.Array.data[33]'
+      value: 
+      objectReference: {fileID: 8445046209077851235, guid: 82197d6a382a3474d9f576fabdfa6c1a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
