@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     private const string c_highScoreKey = "ColourGuy.HighScoreMetres";
+    private const float c_startModuleSpeed = 1f;
+    private const float c_maxModuleSpeed = 3f;
+    private const float c_maxSpeedDistance = 100f;
 
     [SerializeField] private PlayerInput m_playerInput;
     [SerializeField] private Rigidbody2D m_playerBody;
@@ -69,6 +72,9 @@ public class GameController : MonoBehaviour
         }
 
         m_runDistanceMetres += m_moduleSpawner.CurrentMoveSpeed * Time.deltaTime;
+        // Let distance drive the ramp so pauses do not speed the run up
+        float speedProgress = m_runDistanceMetres / c_maxSpeedDistance;
+        m_moduleSpawner.SetModuleMoveSpeed(Mathf.Lerp(c_startModuleSpeed, c_maxModuleSpeed, speedProgress));
     }
 
     public void StartGame()
@@ -77,6 +83,8 @@ public class GameController : MonoBehaviour
         m_isAtMenu = false;
         m_playerBody.GetComponent<PlayerMovement>().ResetDashCooldown();
         m_runDistanceMetres = 0f;
+        // Reset the speed too so the next run does not inherit this ramp
+        m_moduleSpawner.SetModuleMoveSpeed(c_startModuleSpeed);
         if (m_hasStartedRun)
         {
             m_playerBody.GetComponent<PlayerColourSwitching>().StartNewRun();
@@ -117,6 +125,7 @@ public class GameController : MonoBehaviour
     public void ReturnToMenu(bool showInterstitial = false)
     {
         StopReviveCountdown();
+        m_playerBody.GetComponent<PlayerColourSwitching>().ResetPickerColour();
         if (m_hasStartedRun)
         {
             SaveHighScore();
@@ -125,6 +134,7 @@ public class GameController : MonoBehaviour
         m_isGameOver = false;
         m_isAtMenu = true;
         m_rewardedAd.CancelPendingRewardedAd();
+        m_moduleSpawner.SetModuleMoveSpeed(c_startModuleSpeed);
         ResetModules();
         m_moduleSpawner.SetModuleMovement(true);
         m_spikeWall.SetActive(false);
@@ -178,6 +188,12 @@ public class GameController : MonoBehaviour
 
         m_isGameOver = true;
         SaveHighScore();
+        m_playerBody.GetComponent<PlayerColourSwitching>().ResetPickerColour();
+        if (GameAudioController.Instance != null)
+        {
+            GameAudioController.Instance.VibrateOnDeath();
+        }
+
         PauseGame();
         GameOver?.Invoke();
     }
@@ -187,6 +203,7 @@ public class GameController : MonoBehaviour
         ResetModules();
         m_playerBody.GetComponent<PlayerMovement>().ResetDashCooldown();
         m_playerLose.Respawn();
+        m_playerBody.GetComponent<PlayerColourSwitching>().RestorePickerColour();
         m_isGameOver = false;
         m_playerInput.enabled = false;
         m_playerBody.simulated = false;

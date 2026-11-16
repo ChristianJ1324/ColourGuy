@@ -14,6 +14,7 @@ public class DailyRewardController : MonoBehaviour
     [SerializeField] double m_cooldownMinutesTotal = 1;
     [SerializeField] int m_reward = 10;
     TimeSpan m_cooldownTimeRemaining;
+    string m_readyLabel;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +24,7 @@ public class DailyRewardController : MonoBehaviour
 
         m_button = GetComponent<Button>(); // get button
         m_buttonText = GetComponentInChildren<TextMeshProUGUI>(); // get text from component child
+        m_readyLabel = m_buttonText.text;
 
         m_button.onClick.AddListener(ClaimReward);
     }
@@ -87,7 +89,7 @@ public class DailyRewardController : MonoBehaviour
     void EnableButton()
     {
         m_button.interactable = true;
-        m_buttonText.text = "Claim Reward";
+        m_buttonText.text = m_readyLabel;
     }
 
     void DisableButton()

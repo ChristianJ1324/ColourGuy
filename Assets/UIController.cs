@@ -15,6 +15,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_pauseButton;
     [SerializeField] private Text m_pauseButtonLabel;
     [SerializeField] private Text m_muteButtonLabel;
+    private Button m_musicButton;
+    private Button m_soundEffectsButton;
+    private Button m_vibrationButton;
+    private Text m_musicButtonLabel;
+    private Text m_soundEffectsButtonLabel;
+    private Text m_vibrationButtonLabel;
+    private Color m_musicButtonColor;
+    private Color m_soundEffectsButtonColor;
+    private Color m_vibrationButtonColor;
     [SerializeField, Min(1)] private int m_reviveCoinCost = 100;
     [SerializeField] private Button m_reviveWithCoinsButton;
     [SerializeField] private Text m_distanceLabel;
@@ -85,6 +94,7 @@ public class UIController : MonoBehaviour
         CreateClearDataButton();
         LoadGameScene();
         RefreshPrivacyOptionsButton();
+        SetupAudioButtons();
     }
 
     private void Update()
@@ -154,11 +164,6 @@ public class UIController : MonoBehaviour
 
     public void CloseStore()
     {
-        if (InAppPurchaseController.Instance != null && InAppPurchaseController.Instance.IsPurchaseInProgress)
-        {
-            return;
-        }
-
         m_storeMenuPanel.SetActive(false);
         m_mainMenuPanel.SetActive(true);
     }
@@ -493,6 +498,7 @@ public class UIController : MonoBehaviour
                 m_privacyOptionsButton = privacyButtonObject.GetComponent<Button>();
                 m_privacyOptionsButton.onClick.RemoveAllListeners();
                 m_privacyOptionsButton.onClick.AddListener(AdsConsentManager.ShowPrivacyOptions);
+                GameAudioController.Instance.RegisterButtonSound(m_privacyOptionsButton);
 
                 Text privacyLabel = privacyButtonObject.GetComponentInChildren<Text>(true);
                 if (privacyLabel != null)
@@ -506,6 +512,72 @@ public class UIController : MonoBehaviour
         {
             m_privacyOptionsButton.gameObject.SetActive(required);
         }
+    }
+
+    private void SetupAudioButtons()
+    {
+        // The settings buttons already exist so this reads their saved choices into them
+        Transform music = m_settingsMenuPanel.transform.Find("MusicButton");
+        Transform soundEffects = m_settingsMenuPanel.transform.Find("SoundEffectsButton");
+        Transform vibration = m_settingsMenuPanel.transform.Find("VibrationButton");
+
+        m_musicButton = music.GetComponent<Button>();
+        m_soundEffectsButton = soundEffects.GetComponent<Button>();
+        m_vibrationButton = vibration.GetComponent<Button>();
+        m_musicButtonLabel = music.GetComponentInChildren<Text>(true);
+        m_soundEffectsButtonLabel = soundEffects.GetComponentInChildren<Text>(true);
+        m_vibrationButtonLabel = vibration.GetComponentInChildren<Text>(true);
+        m_musicButtonColor = m_musicButton.image.color;
+        m_soundEffectsButtonColor = m_soundEffectsButton.image.color;
+        m_vibrationButtonColor = m_vibrationButton.image.color;
+
+        GameAudioController audio = GameAudioController.Instance;
+        // Hidden menus still need this or their taps go quiet when they open
+        foreach (Button button in GetComponentsInChildren<Button>(true))
+        {
+            if (button != m_privacyOptionsButton)
+            {
+                audio.RegisterButtonSound(button);
+            }
+        }
+
+        m_musicButton.onClick.AddListener(ToggleMusic);
+        m_soundEffectsButton.onClick.AddListener(ToggleSoundEffects);
+        m_vibrationButton.onClick.AddListener(ToggleVibration);
+        UpdateAudioButtons();
+    }
+
+    private void ToggleMusic()
+    {
+        GameAudioController.Instance.ToggleMusic();
+        UpdateAudioButtons();
+    }
+
+    private void ToggleSoundEffects()
+    {
+        GameAudioController.Instance.ToggleEffects();
+        UpdateAudioButtons();
+    }
+
+    private void ToggleVibration()
+    {
+        GameAudioController.Instance.ToggleVibration();
+        UpdateAudioButtons();
+    }
+
+    private void UpdateAudioButtons()
+    {
+        GameAudioController audio = GameAudioController.Instance;
+        SetAudioButton(m_musicButton, m_musicButtonLabel, m_musicButtonColor, "Music", audio.MusicOn);
+        SetAudioButton(m_soundEffectsButton, m_soundEffectsButtonLabel, m_soundEffectsButtonColor, "Sound Effects", audio.EffectsOn);
+        SetAudioButton(m_vibrationButton, m_vibrationButtonLabel, m_vibrationButtonColor, "Vibration", audio.VibrationOn);
+    }
+
+    private static void SetAudioButton(Button button, Text label, Color originalColor, string title, bool isOn)
+    {
+        label.text = $"{title}: {(isOn ? "On" : "Off")}";
+        // Keep the original button shade when sound gets switched back on
+        button.image.color = isOn ? originalColor : Color.Lerp(originalColor, Color.black, 0.5f);
     }
 
     private void CreateClearDataButton()

@@ -1692,8 +1692,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -265, y: 350}
-  m_SizeDelta: {x: 320, y: 180}
+  m_AnchoredPosition: {x: -346.73914, y: 350}
+  m_SizeDelta: {x: 483.48, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5300000402
 CanvasRenderer:
@@ -2403,7 +2403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModuleMoveSpeed
-      value: 1.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8210974352326982818, guid: 7fa9514ef2b90ad4f8756b1dda342c3c, type: 3}
       propertyPath: m_ModulePrefabs.Array.size

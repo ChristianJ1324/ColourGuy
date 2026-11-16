@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_jumpAction;
     private Vector3 bottom;
     private bool canJump;
+    private bool m_hasJumpedSinceGrounded;
     private bool m_isDashing;
-    private bool m_dashButtonVisible;
     private float m_dashEndTime;
     private float m_nextDashTime;
     private float m_jumpStartTime;
@@ -80,8 +80,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         CheckForGround();
-        if (canJump)
+        if (canJump && !m_hasJumpedSinceGrounded)
         {
+            m_hasJumpedSinceGrounded = true;
+            if (GameAudioController.Instance != null)
+            {
+                GameAudioController.Instance.PlayJump();
+            }
+
             m_jumpStartTime = Time.time;
             m_jumpStartY = transform.position.y;
 
@@ -120,8 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDash()
     {
-        if (InAppPurchaseController.Instance == null || !InAppPurchaseController.Instance.HasDash ||
-            !playerRigidBody.simulated || Time.time < m_nextDashTime)
+        if (!playerRigidBody.simulated || Time.time < m_nextDashTime)
         {
             return;
         }
@@ -146,11 +151,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        bool hasDash = InAppPurchaseController.Instance != null && InAppPurchaseController.Instance.HasDash;
-        if (m_dashButtonVisible != hasDash)
+        if (!m_dashButton.activeSelf)
         {
-            m_dashButtonVisible = hasDash;
-            m_dashButton.SetActive(hasDash);
+            m_dashButton.SetActive(true);
         }
     }
 
@@ -183,7 +186,15 @@ public class PlayerMovement : MonoBehaviour
         isOnGround = Physics2D.Raycast(bottom, Vector2.down, groundCheckDistance, groundLayer) ||
                      Physics2D.Raycast(bottom + Vector3.left * (bounds.extents.x - inset), Vector2.down, groundCheckDistance, groundLayer) ||
                      Physics2D.Raycast(bottom + Vector3.right * (bounds.extents.x - inset), Vector2.down, groundCheckDistance, groundLayer);
-        canJump = isOnGround;
+        canJump = isOnGround && playerRigidBody.linearVelocity.y <= 0f;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (playerRigidBody.linearVelocity.y <= 0f && collision.contactCount > 0 && collision.GetContact(0).normal.y > 0.5f)
+        {
+            m_hasJumpedSinceGrounded = false;
+        }
     }
 
     private void OnDrawGizmosSelected()

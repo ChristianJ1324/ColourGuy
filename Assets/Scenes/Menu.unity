@@ -410,6 +410,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8039216
       objectReference: {fileID: 0}
+    - target: {fileID: 970881752894443374, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_text
+      value: Daily login Ready to Claim!
+      objectReference: {fileID: 0}
     - target: {fileID: 1786072152490889369, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_SizeDelta.x
       value: 566.4598
@@ -589,6 +593,42 @@ PrefabInstance:
     - target: {fileID: 6951154378447231053, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_Name
       value: MenuUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529555225802606135, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 247.0969
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529555225802606135, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 102.5302
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529555225802606135, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529555225802606135, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802104424423424035, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802104424423424035, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4966732595609684114, guid: 55e35a9b7da447838a06460648a59b33, type: 3}
+    - target: {fileID: 7802104424423424035, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802104424423424035, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802104424423424035, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8154410262753174002, guid: bd49ab1b742c8bc49aee842b9b08dfe7, type: 3}
       propertyPath: m_SizeDelta.x

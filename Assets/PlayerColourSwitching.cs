@@ -111,6 +111,18 @@ public class PlayerColourSwitching : MonoBehaviour
         SetColorState(startingColour);
     }
 
+    public void ResetPickerColour()
+    {
+        // Clear the held stick input so the last colour does not leak into the next run
+        m_moveDirection = Vector2.zero;
+        m_colourPickerKnob.color = Color.white;
+    }
+
+    public void RestorePickerColour()
+    {
+        m_colourPickerKnob.color = m_spriteRenderer.color;
+    }
+
     public void SetColorState(Colour _colorState)
     {
         switch (_colorState)
